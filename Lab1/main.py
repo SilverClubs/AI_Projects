@@ -1,4 +1,11 @@
 from math import sqrt
+from copy import deepcopy
+
+goal = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+]
 
 
 def compress(arr):
@@ -40,11 +47,6 @@ def get_row_col(key, arr):
 
 
 def manhattan(cur_state):
-    goal = [
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-    ]
     total = 0
     for row in range(3):
         for col in range(3):
@@ -56,11 +58,6 @@ def manhattan(cur_state):
 
 
 def euclidean(cur_state):
-    goal = [
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-    ]
     total = 0
     for row in range(3):
         for col in range(3):
@@ -69,3 +66,29 @@ def euclidean(cur_state):
             cur_row, cur_col = get_row_col(key, cur_state)
             total += sqrt(pow(row - cur_row, 2) + pow(col - cur_col, 2))
     return total
+
+
+def goal_check(cur_state):
+    return cur_state == goal
+
+
+def expand(cur_state):  # returns compressed states
+    states = []
+    row, col = get_row_col(0, cur_state)
+    if row > 0:  # move up
+        temp = deepcopy(cur_state)
+        temp[row][col], temp[row - 1][col] = temp[row - 1][col], temp[row][col]
+        states.append(compress(temp))
+    if row < 2:  # move down
+        temp = deepcopy(cur_state)
+        temp[row][col], temp[row + 1][col] = temp[row + 1][col], temp[row][col]
+        states.append(compress(temp))
+    if col > 0:  # move left
+        temp = deepcopy(cur_state)
+        temp[row][col], temp[row][col - 1] = temp[row][col - 1], temp[row][col]
+        states.append(compress(temp))
+    if col < 2:  # move right
+        temp = deepcopy(cur_state)
+        temp[row][col], temp[row][col + 1] = temp[row][col + 1], temp[row][col]
+        states.append(compress(temp))
+    return states
