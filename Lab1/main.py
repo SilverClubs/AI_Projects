@@ -1,3 +1,6 @@
+from math import sqrt
+
+
 def compress(arr):
     num = 0
     i = 0
@@ -49,4 +52,20 @@ def manhattan(cur_state):
             row, col = get_row_col(key, goal)
             cur_row, cur_col = get_row_col(key, cur_state)
             total += abs(row - cur_row) + abs(col - cur_col)
+    return total
+
+
+def euclidean(cur_state):
+    goal = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+    ]
+    total = 0
+    for row in range(3):
+        for col in range(3):
+            key = goal[row][col]
+            row, col = get_row_col(key, goal)
+            cur_row, cur_col = get_row_col(key, cur_state)
+            total += sqrt(pow(row - cur_row, 2) + pow(col - cur_col, 2))
     return total
