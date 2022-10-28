@@ -26,3 +26,27 @@ def decompress(num):
         if end:
             break
     return arr
+
+
+def get_row_col(key, arr):
+    for row in range(3):
+        for col in range(3):
+            if key == arr[row][col]:
+                return (row, col)
+    return -1
+
+
+def manhattan(cur_state):
+    goal = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+    ]
+    total = 0
+    for row in range(3):
+        for col in range(3):
+            key = goal[row][col]
+            row, col = get_row_col(key, goal)
+            cur_row, cur_col = get_row_col(key, cur_state)
+            total += abs(row - cur_row) + abs(col - cur_col)
+    return total
