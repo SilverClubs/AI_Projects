@@ -139,6 +139,7 @@ def get_path_depth(parent_map):
             path.append(node)
             node = parent
             parent = parent_map[node]
+        path.append(node)
 
     cost_map = {}
     for node in parent_map:
