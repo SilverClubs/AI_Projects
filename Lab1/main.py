@@ -145,17 +145,22 @@ def get_path_depth(parent_map):
     for node in parent_map:
         parent = parent_map[node]
         tmp = [node]
-        while node != parent:
+        while node != parent and node not in cost_map:
             node = parent
             parent = parent_map[node]
             tmp.append(node)
 
-        cost = len(tmp)
+        cost = len(tmp) - 1
+        if node in cost_map:
+            cost += cost_map[node]
+
         for node in tmp:
-            cost_map[node] = cost - 1
+            if node in cost_map:
+                break
+            cost_map[node] = cost
             cost -= 1
 
-    return (len(path), path, cost_map[max(cost_map, key=cost_map.get)])
+    return (len(path) - 1, path, cost_map[max(cost_map, key=cost_map.get)])
 
 
 initial = [
