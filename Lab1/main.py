@@ -1,5 +1,8 @@
 from math import sqrt
 from copy import deepcopy
+from queue import PriorityQueue
+import time
+
 
 goal = [
     [0, 1, 2],
@@ -92,3 +95,89 @@ def expand(cur_state):  # returns compressed states
         temp[row][col], temp[row][col + 1] = temp[row][col + 1], temp[row][col]
         states.append(compress(temp))
     return states
+
+
+def a_star(initial_state, heuristic):
+    parent_map = {}
+    parent_map[compress(initial_state)] = compress(initial_state)
+    frontier = PriorityQueue()
+    frontier.put((heuristic(initial_state), compress(initial_state)))
+    frontier_map = {}
+    frontier_map[compress(initial_state)] = heuristic(initial_state)
+    explored = set()
+    expanded_count = 0
+
+    while not frontier.empty():
+        state = frontier.get()
+        h = heuristic(decompress(state[1]))
+        g = state[0] - h
+        state = state[1]
+        explored.add(state)
+        state = decompress(state)
+        if goal_check(state):
+            return (True, expanded_count, parent_map)
+
+        neighbors = expand(state)
+        state = compress(state)
+        expanded_count += 1
+        for neighbor in neighbors:
+            if neighbor not in explored:
+                cost = g + 1 + heuristic(decompress(neighbor))
+                frontier.put((cost, neighbor))
+                frontier_map[neighbor] = cost
+                parent_map[neighbor] = state
+
+    return (False, expanded_count, parent_map)
+
+
+def get_path_depth(parent_map):
+    path = []
+    node = compress(goal)
+    if node in parent_map:
+        parent = parent_map[node]
+        while node != parent:
+            path.append(node)
+            node = parent
+            parent = parent_map[node]
+
+    cost_map = {}
+    for node in parent_map:
+        parent = parent_map[node]
+        tmp = [node]
+        while node != parent:
+            node = parent
+            parent = parent_map[node]
+            tmp.append(node)
+
+        cost = len(tmp)
+        for node in tmp:
+            cost_map[node] = cost - 1
+            cost -= 1
+
+    return (len(path), path, cost_map[max(cost_map, key=cost_map.get)])
+
+
+initial = [
+    [1, 2, 5],
+    [3, 4, 8],
+    [6, 7, 0],
+]
+
+unsolvable_state = [
+    [8, 1, 2],
+    [0, 4, 3],
+    [7, 6, 5],
+]
+
+start = time.time()
+success, expanded_count, parent_map = a_star(initial, manhattan)
+end = time.time()
+print(f"Elapsed time: {end-start} seconds")
+print(f"Nodes expanded: {expanded_count}")
+cost, path, depth = get_path_depth(parent_map)
+print(f"Search depth: {depth}")
+if success:
+    print(f"Path found. Cost: {cost}.")
+    print(f"Path: {path}")
+else:
+    print(f"Path not found.")
