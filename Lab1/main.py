@@ -1,196 +1,326 @@
-from math import sqrt
-from copy import deepcopy
-from queue import PriorityQueue
-import time
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import pyqtSignal
+from PyQt5.QtGui import QFont
+from PyQt5.QtWidgets import QLabel
+from algos import *
+import math
 
 
-goal = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-]
+class Label(QLabel):
+    clicked = pyqtSignal()
+
+    def __init__(self, parent=None):
+        QLabel.__init__(self, parent=parent)
+
+    def mousePressEvent(self, event):
+        self.clicked.emit()
 
 
-def compress(arr):
-    num = 0
-    i = 0
-    for row in range(2, -1, -1):
-        for col in range(2, -1, -1):
-            num += arr[row][col] * pow(10, i)
-            i += 1
-    return num
+class Ui_MainWindow(object):
+
+    def setupUi(self, MainWindow):
+        self.counter = 0
+        self.label_array = []
+        self.values_array = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.resize(848, 576)
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setGeometry(QtCore.QRect(0, 0, 531, 531))
+        self.label.setFrameShape(QtWidgets.QFrame.WinPanel)
+        self.label.setText("")
+        self.label.setPixmap(QtGui.QPixmap("background.jpg"))
+        self.label.setObjectName("label")
+        self.label_a = Label(self.centralwidget)
+        self.label_a.setGeometry(QtCore.QRect(10, 10, 171, 171))
+        self.label_a.setFrameShape(QtWidgets.QFrame.WinPanel)
+        self.label_a.setObjectName("label_a")
+        self.label_a.setFont(QFont('Arial', 70))
+        self.label_a.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_a.clicked.connect(self.edita)
+        self.label_b = Label(self.centralwidget)
+        self.label_b.setGeometry(QtCore.QRect(180, 10, 171, 171))
+        self.label_b.setFrameShape(QtWidgets.QFrame.WinPanel)
+        self.label_b.setObjectName("label_b")
+        self.label_b.setFont(QFont('Arial', 70))
+        self.label_b.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_b.clicked.connect(self.editb)
+        self.label_c = Label(self.centralwidget)
+        self.label_c.setGeometry(QtCore.QRect(350, 10, 171, 171))
+        self.label_c.setFrameShape(QtWidgets.QFrame.WinPanel)
+        self.label_c.setObjectName("label_c")
+        self.label_c.setFont(QFont('Arial', 70))
+        self.label_c.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_c.clicked.connect(self.editc)
+        self.label_f = Label(self.centralwidget)
+        self.label_f.setGeometry(QtCore.QRect(350, 180, 171, 171))
+        self.label_f.setFrameShape(QtWidgets.QFrame.WinPanel)
+        self.label_f.setObjectName("label_f")
+        self.label_f.setFont(QFont('Arial', 70))
+        self.label_f.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_f.clicked.connect(self.editf)
+        self.label_e = Label(self.centralwidget)
+        self.label_e.setGeometry(QtCore.QRect(180, 180, 171, 171))
+        self.label_e.setFrameShape(QtWidgets.QFrame.WinPanel)
+        self.label_e.setObjectName("label_e")
+        self.label_e.setFont(QFont('Arial', 70))
+        self.label_e.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_e.clicked.connect(self.edite)
+        self.label_d = Label(self.centralwidget)
+        self.label_d.setGeometry(QtCore.QRect(10, 180, 171, 171))
+        self.label_d.setFrameShape(QtWidgets.QFrame.WinPanel)
+        self.label_d.setObjectName("label_d")
+        self.label_d.setFont(QFont('Arial', 70))
+        self.label_d.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_d.clicked.connect(self.editd)
+        self.label_i = Label(self.centralwidget)
+        self.label_i.setGeometry(QtCore.QRect(350, 350, 171, 171))
+        self.label_i.setFrameShape(QtWidgets.QFrame.WinPanel)
+        self.label_i.setObjectName("label_i")
+        self.label_i.setFont(QFont('Arial', 70))
+        self.label_i.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_i.clicked.connect(self.editi)
+        self.label_h = Label(self.centralwidget)
+        self.label_h.setGeometry(QtCore.QRect(180, 350, 171, 171))
+        self.label_h.setFrameShape(QtWidgets.QFrame.WinPanel)
+        self.label_h.setObjectName("label_h")
+        self.label_h.setFont(QFont('Arial', 70))
+        self.label_h.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_h.clicked.connect(self.edith)
+        self.label_g = Label(self.centralwidget)
+        self.label_g.setGeometry(QtCore.QRect(10, 350, 171, 171))
+        self.label_g.setFrameShape(QtWidgets.QFrame.WinPanel)
+        self.label_g.setObjectName("label_g")
+        self.label_g.setFont(QFont('Arial', 70))
+        self.label_g.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_g.clicked.connect(self.editg)
+        self.comboBox = QtWidgets.QComboBox(self.centralwidget)
+        self.comboBox.setGeometry(QtCore.QRect(550, 50, 281, 21))
+        self.comboBox.setObjectName("comboBox")
+        self.comboBox.addItem("BFS")
+        self.comboBox.addItem("DFS")
+        self.comboBox.addItem("A* (manhattan)")
+        self.comboBox.addItem("A* (euclidean)")
+        self.label_11 = QtWidgets.QLabel(self.centralwidget)
+        self.label_11.setGeometry(QtCore.QRect(550, 20, 141, 21))
+        self.label_11.setObjectName("label_11")
+        self.solvable_or_not = QtWidgets.QLabel(self.centralwidget)
+        self.solvable_or_not.setGeometry(QtCore.QRect(550, 160, 281, 41))
+        self.solvable_or_not.setObjectName("solvable_or_not")
+        self.solvable_or_not.setFont(QFont('Arial', 15))
+        self.solvable_or_not.setAlignment(QtCore.Qt.AlignCenter)
+        self.pushButton = QtWidgets.QPushButton(self.centralwidget, clicked=lambda: self.run_algorithm())
+        self.pushButton.setGeometry(QtCore.QRect(550, 90, 121, 41))
+        self.pushButton.setObjectName("pushButton")
+        self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_2.setGeometry(QtCore.QRect(710, 90, 121, 41))
+        self.pushButton_2.setObjectName("pushButton_2")
+        self.label_12 = QtWidgets.QLabel(self.centralwidget)
+        self.label_12.setGeometry(QtCore.QRect(550, 250, 261, 31))
+        self.label_12.setObjectName("label_12")
+        self.label_12.setFont(QFont('Arial', 14))
+        self.label_13 = QtWidgets.QLabel(self.centralwidget)
+        self.label_13.setGeometry(QtCore.QRect(550, 290, 261, 31))
+        self.label_13.setObjectName("label_13")
+        self.label_13.setFont(QFont('Arial', 14))
+        self.label_14 = QtWidgets.QLabel(self.centralwidget)
+        self.label_14.setGeometry(QtCore.QRect(550, 330, 261, 31))
+        self.label_14.setObjectName("label_14")
+        self.label_14.setFont(QFont('Arial', 14))
+        self.label_15 = QtWidgets.QLabel(self.centralwidget)
+        self.label_15.setGeometry(QtCore.QRect(550, 370, 261, 31))
+        self.label_15.setObjectName("label_15")
+        self.label_15.setFont(QFont('Arial', 14))
+        self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget, clicked=lambda: self.clear())
+        self.pushButton_3.setGeometry(QtCore.QRect(630, 480, 121, 41))
+        self.pushButton_3.setObjectName("pushButton_3")
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 848, 21))
+        self.menubar.setObjectName("menubar")
+        MainWindow.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.statusbar.setObjectName("statusbar")
+        MainWindow.setStatusBar(self.statusbar)
+
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def retranslateUi(self, MainWindow):
+        _translate = QtCore.QCoreApplication.translate
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.label_a.setText(_translate("MainWindow", ""))
+        self.label_b.setText(_translate("MainWindow", ""))
+        self.label_c.setText(_translate("MainWindow", ""))
+        self.label_f.setText(_translate("MainWindow", ""))
+        self.label_e.setText(_translate("MainWindow", ""))
+        self.label_d.setText(_translate("MainWindow", ""))
+        self.label_i.setText(_translate("MainWindow", ""))
+        self.label_h.setText(_translate("MainWindow", ""))
+        self.label_g.setText(_translate("MainWindow", ""))
+        self.label_11.setText(_translate("MainWindow", "Choose solving algorithm:"))
+        self.solvable_or_not.setText(_translate("MainWindow", ""))
+        self.pushButton.setText(_translate("MainWindow", "Start"))
+        self.pushButton_2.setText(_translate("MainWindow", "View"))
+        self.label_12.setText(_translate("MainWindow",
+                                         ""))
+        self.label_13.setText(_translate("MainWindow",
+                                         ""))
+        self.label_14.setText(_translate("MainWindow",
+                                         ""))
+        self.pushButton_3.setText(_translate("MainWindow", "Reset"))
+        self.label_15.setText(_translate("MainWindow",
+                                         ""))
+        self.pushButton_3.setText(_translate("MainWindow", "Reset"))
+
+    def edita(self):
+        var = self.label_a
+        self.label_array.append(var)
+        self.values_array[0][0] = self.counter
+        if self.counter != 0:
+            self.label_a.setText(str(self.counter))
+            self.label_a.setStyleSheet("background-color: gray")
+        self.counter = self.counter + 1
+
+    def editb(self):
+        var = self.label_b
+        self.label_array.append(var)
+        self.values_array[0][1] = self.counter
+        if self.counter != 0:
+            self.label_b.setText(str(self.counter))
+            self.label_b.setStyleSheet("background-color: gray")
+        self.counter = self.counter + 1
+
+    def editc(self):
+        var = self.label_c
+        self.label_array.append(var)
+        self.values_array[0][2] = self.counter
+        if self.counter != 0:
+            self.label_c.setText(str(self.counter))
+            self.label_c.setStyleSheet("background-color: gray")
+        self.counter = self.counter + 1
+
+    def editd(self):
+        var = self.label_d
+        self.label_array.append(var)
+        self.values_array[1][0] = self.counter
+        if self.counter != 0:
+            self.label_d.setText(str(self.counter))
+            self.label_d.setStyleSheet("background-color: gray")
+        self.counter = self.counter + 1
+
+    def edite(self):
+        var = self.label_e
+        self.label_array.append(var)
+        self.values_array[1][1] = self.counter
+        if self.counter != 0:
+            self.label_e.setText(str(self.counter))
+            self.label_e.setStyleSheet("background-color: gray")
+        self.counter = self.counter + 1
+
+    def editf(self):
+        var = self.label_f
+        self.label_array.append(var)
+        self.values_array[1][2] = self.counter
+        if self.counter != 0:
+            self.label_f.setText(str(self.counter))
+            self.label_f.setStyleSheet("background-color: gray")
+        self.counter = self.counter + 1
+
+    def editg(self):
+        var = self.label_g
+        self.label_array.append(var)
+        self.values_array[2][0] = self.counter
+        if self.counter != 0:
+            self.label_g.setText(str(self.counter))
+            self.label_g.setStyleSheet("background-color: gray")
+        self.counter = self.counter + 1
+
+    def edith(self):
+        var = self.label_h
+        self.label_array.append(var)
+        self.values_array[2][1] = self.counter
+        if self.counter != 0:
+            self.label_h.setText(str(self.counter))
+            self.label_h.setStyleSheet("background-color: gray")
+        self.counter = self.counter + 1
+
+    def editi(self):
+        var = self.label_i
+        self.label_array.append(var)
+        self.values_array[2][2] = self.counter
+        if self.counter != 0:
+            self.label_i.setText(str(self.counter))
+            self.label_i.setStyleSheet("background-color: gray")
+        self.counter = self.counter + 1
+
+    def editj(self):
+        var = self.label_j
+        self.label_array.append(var)
+        self.values_array.append(self.counter)
+        if self.counter != 0:
+            self.label_j.setText(str(self.counter))
+            self.label_j.setStyleSheet("background-color: gray")
+        self.counter = self.counter + 1
+
+    def run_algorithm(self):
+        if self.comboBox.currentText() == "BFS":
+            print()
+            # BFS call here
+
+        if self.comboBox.currentText() == "DFS":
+            print()
+            # BFS call here
+
+        if self.comboBox.currentText() == "A* (manhattan)":
+            start = time.time()
+            success, expanded_count, parent_map = a_star(self.values_array, manhattan)
+            end = time.time()
+            net_time = round((end - start), 6)
+            self.label_12.setText("Elapsed time: " + str(net_time) + " s")
+            self.label_13.setText("Nodes expanded: " + str(expanded_count))
+            cost, path, depth = get_path_depth(parent_map)
+            self.label_15.setText("Depth: " + str(depth))
+            if success:
+                self.label_14.setText("Cost: " + str(cost))
+                self.solvable_or_not.setText("This is a solvable problem")
+                self.solvable_or_not.setStyleSheet("background-color: lightGreen")
+            else:
+                self.solvable_or_not.setText("This is an unsolvable problem")
+                self.solvable_or_not.setStyleSheet("background-color: #FF6961")
+
+        if self.comboBox.currentText() == "A* (euclidean)":
+            start = time.time()
+            success, expanded_count, parent_map = a_star(self.values_array, euclidean)
+            end = time.time()
+            net_time = round((end - start), 6)
+            self.label_12.setText("Elapsed time: " + str(net_time) + " s")
+            self.label_13.setText("Nodes expanded: " + str(expanded_count))
+            cost, path, depth = get_path_depth(parent_map)
+            self.label_15.setText("Depth: " + str(depth))
+            if success:
+                self.label_14.setText("Cost: " + str(cost))
+                self.solvable_or_not.setText("This is a solvable problem")
+                self.solvable_or_not.setStyleSheet("background-color: green")
+            else:
+                self.solvable_or_not.setText("This is an unsolvable problem")
+                self.solvable_or_not.setStyleSheet("background-color: red")
 
 
-def decompress(num):
-    arr = [
-        [0, 0, 0],
-        [0, 0, 0],
-        [0, 0, 0],
-    ]
-    end = False
-    for row in range(2, -1, -1):
-        for col in range(2, -1, -1):
-            rem = int(num % 10)
-            arr[row][col] = rem
-            num = int(num / 10)
-            if num == 0:
-                end = True
-                break
-        if end:
-            break
-    return arr
+    def clear(self):
+        self.values_array = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+        self.label_array = []
+        self.counter = 0
 
 
-def get_row_col(key, arr):
-    for row in range(3):
-        for col in range(3):
-            if key == arr[row][col]:
-                return (row, col)
-    return -1
+if __name__ == "__main__":
+    import sys
 
-
-def manhattan(cur_state):
-    total = 0
-    for row in range(3):
-        for col in range(3):
-            key = goal[row][col]
-            row, col = get_row_col(key, goal)
-            cur_row, cur_col = get_row_col(key, cur_state)
-            total += abs(row - cur_row) + abs(col - cur_col)
-    return total
-
-
-def euclidean(cur_state):
-    total = 0
-    for row in range(3):
-        for col in range(3):
-            key = goal[row][col]
-            row, col = get_row_col(key, goal)
-            cur_row, cur_col = get_row_col(key, cur_state)
-            total += sqrt(pow(row - cur_row, 2) + pow(col - cur_col, 2))
-    return total
-
-
-def goal_check(cur_state):
-    return cur_state == goal
-
-
-def expand(cur_state):  # returns compressed states
-    states = []
-    row, col = get_row_col(0, cur_state)
-    if row > 0:  # move up
-        temp = deepcopy(cur_state)
-        temp[row][col], temp[row - 1][col] = temp[row - 1][col], temp[row][col]
-        states.append(compress(temp))
-    if row < 2:  # move down
-        temp = deepcopy(cur_state)
-        temp[row][col], temp[row + 1][col] = temp[row + 1][col], temp[row][col]
-        states.append(compress(temp))
-    if col > 0:  # move left
-        temp = deepcopy(cur_state)
-        temp[row][col], temp[row][col - 1] = temp[row][col - 1], temp[row][col]
-        states.append(compress(temp))
-    if col < 2:  # move right
-        temp = deepcopy(cur_state)
-        temp[row][col], temp[row][col + 1] = temp[row][col + 1], temp[row][col]
-        states.append(compress(temp))
-    return states
-
-
-def a_star(initial_state, heuristic):
-    parent_map = {}
-    parent_map[compress(initial_state)] = compress(initial_state)
-    frontier = PriorityQueue()
-    frontier.put((heuristic(initial_state), compress(initial_state)))
-    frontier_map = {}
-    frontier_map[compress(initial_state)] = heuristic(initial_state)
-    explored = set()
-    expanded_count = 0
-
-    while not frontier.empty():
-        state = frontier.get()
-        h = heuristic(decompress(state[1]))
-        g = state[0] - h
-        state = state[1]
-        explored.add(state)
-        state = decompress(state)
-        if goal_check(state):
-            return (True, expanded_count, parent_map)
-
-        neighbors = expand(state)
-        state = compress(state)
-        expanded_count += 1
-        for neighbor in neighbors:
-            if neighbor not in explored:
-                cost = g + 1 + heuristic(decompress(neighbor))
-                if neighbor not in frontier_map or cost < frontier_map[neighbor]:
-                    frontier.put((cost, neighbor))
-                    frontier_map[neighbor] = cost
-                    parent_map[neighbor] = state
-
-    return (False, expanded_count, parent_map)
-
-
-def get_path_depth(parent_map):
-    path = []
-    node = compress(goal)
-    if node in parent_map:
-        parent = parent_map[node]
-        while node != parent:
-            path.append(node)
-            node = parent
-            parent = parent_map[node]
-        path.append(node)
-
-    cost_map = {}
-    for node in parent_map:
-        parent = parent_map[node]
-        tmp = [node]
-        while node != parent and node not in cost_map:
-            node = parent
-            parent = parent_map[node]
-            tmp.append(node)
-
-        cost = len(tmp) - 1
-        if node in cost_map:
-            cost += cost_map[node]
-
-        for node in tmp:
-            if node in cost_map:
-                break
-            cost_map[node] = cost
-            cost -= 1
-
-    return (len(path) - 1, path, cost_map[max(cost_map, key=cost_map.get)])
-
-
-initial = [
-    [1, 2, 5],
-    [3, 4, 8],
-    [6, 7, 0],
-]
-
-unsolvable_state = [
-    [8, 1, 2],
-    [0, 4, 3],
-    [7, 6, 5],
-]
-
-test = [
-    [1, 8, 2],
-    [0, 4, 3],
-    [7, 6, 5],
-]
-
-start = time.time()
-success, expanded_count, parent_map = a_star(test, manhattan)
-end = time.time()
-print(f"Elapsed time: {end-start} seconds")
-print(f"Nodes expanded: {expanded_count}")
-cost, path, depth = get_path_depth(parent_map)
-print(f"Search depth: {depth}")
-if success:
-    print(f"Path found. Cost: {cost}.")
-    print(f"Path: {path}")
-else:
-    print(f"Path not found.")
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())
