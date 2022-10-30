@@ -123,9 +123,10 @@ def a_star(initial_state, heuristic):
         for neighbor in neighbors:
             if neighbor not in explored:
                 cost = g + 1 + heuristic(decompress(neighbor))
-                frontier.put((cost, neighbor))
-                frontier_map[neighbor] = cost
-                parent_map[neighbor] = state
+                if neighbor not in frontier_map or cost < frontier_map[neighbor]:
+                    frontier.put((cost, neighbor))
+                    frontier_map[neighbor] = cost
+                    parent_map[neighbor] = state
 
     return (False, expanded_count, parent_map)
 
@@ -175,8 +176,14 @@ unsolvable_state = [
     [7, 6, 5],
 ]
 
+test = [
+    [1, 8, 2],
+    [0, 4, 3],
+    [7, 6, 5],
+]
+
 start = time.time()
-success, expanded_count, parent_map = a_star(initial, manhattan)
+success, expanded_count, parent_map = a_star(test, manhattan)
 end = time.time()
 print(f"Elapsed time: {end-start} seconds")
 print(f"Nodes expanded: {expanded_count}")
