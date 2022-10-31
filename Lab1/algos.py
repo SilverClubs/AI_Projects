@@ -1,5 +1,4 @@
 from math import sqrt
-from copy import deepcopy
 from collections import deque
 from heapq import heappush, heappop
 import time
@@ -11,17 +10,19 @@ goal = [
     [6, 7, 8],
 ]
 
-pow_10 = [1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000]
 
-
-def compress(arr):
-    num = 0
-    i = 0
-    for row in range(2, -1, -1):
-        for col in range(2, -1, -1):
-            num += arr[row][col] * pow_10[i]
-            i += 1
-    return num
+def compress(arr):  # ugly but fast
+    return (
+        arr[2][2]
+        + arr[2][1] * 10
+        + arr[2][0] * 100
+        + arr[1][2] * 1000
+        + arr[1][1] * 10000
+        + arr[1][0] * 100000
+        + arr[0][2] * 1000000
+        + arr[0][1] * 10000000
+        + arr[0][0] * 100000000
+    )
 
 
 def decompress(num):
@@ -76,19 +77,19 @@ def expand(cur_state):  # returns compressed states
     states = []
     row, col = get_row_col(0, cur_state)
     if row > 0:  # move up
-        temp = deepcopy(cur_state)
+        temp = [row[:] for row in cur_state]
         temp[row][col], temp[row - 1][col] = temp[row - 1][col], temp[row][col]
         states.append(compress(temp))
     if row < 2:  # move down
-        temp = deepcopy(cur_state)
+        temp = [row[:] for row in cur_state]
         temp[row][col], temp[row + 1][col] = temp[row + 1][col], temp[row][col]
         states.append(compress(temp))
     if col > 0:  # move left
-        temp = deepcopy(cur_state)
+        temp = [row[:] for row in cur_state]
         temp[row][col], temp[row][col - 1] = temp[row][col - 1], temp[row][col]
         states.append(compress(temp))
     if col < 2:  # move right
-        temp = deepcopy(cur_state)
+        temp = [row[:] for row in cur_state]
         temp[row][col], temp[row][col + 1] = temp[row][col + 1], temp[row][col]
         states.append(compress(temp))
     return states
