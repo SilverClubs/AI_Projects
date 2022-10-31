@@ -183,85 +183,120 @@ class Ui_MainWindow(object):
 
     def edita(self):
         var = self.label_a
-        self.label_array[0][0] = var
-        self.values_array[0][0] = self.counter
-        if self.counter != 0:
-            self.label_a.setText(str(self.counter))
-            self.label_a.setStyleSheet("background-color: gray")
-        self.counter = self.counter + 1
+        if self.counter < 9 and self.label_array[0][0] != var:
+            self.label_array[0][0] = var
+            self.values_array[0][0] = self.counter
+            if self.counter == 0:
+                self.label_a.setText("")
+                self.label_a.setStyleSheet("border: 3px solid blue")
+            else:
+                self.label_a.setText(str(self.counter))
+                self.label_a.setStyleSheet("background-color: gray")
+            self.counter = self.counter + 1
 
     def editb(self):
         var = self.label_b
-        self.label_array[0][1] = var
-        self.values_array[0][1] = self.counter
-        if self.counter != 0:
-            self.label_b.setText(str(self.counter))
-            self.label_b.setStyleSheet("background-color: gray")
-        self.counter = self.counter + 1
+        if self.counter < 9 and self.label_array[0][1] != var:
+            self.label_array[0][1] = var
+            self.values_array[0][1] = self.counter
+            if self.counter == 0:
+                self.label_b.setText("")
+                self.label_b.setStyleSheet("border: 3px solid blue")
+            else:
+                self.label_b.setText(str(self.counter))
+                self.label_b.setStyleSheet("background-color: gray")
+            self.counter = self.counter + 1
 
     def editc(self):
         var = self.label_c
-        self.label_array[0][2] = var
-        self.values_array[0][2] = self.counter
-        if self.counter != 0:
-            self.label_c.setText(str(self.counter))
-            self.label_c.setStyleSheet("background-color: gray")
-        self.counter = self.counter + 1
+        if self.counter < 9 and self.label_array[0][2] != var:
+            self.label_array[0][2] = var
+            self.values_array[0][2] = self.counter
+            if self.counter == 0:
+                self.label_c.setText("")
+                self.label_c.setStyleSheet("border: 3px solid blue")
+            else:
+                self.label_c.setText(str(self.counter))
+                self.label_c.setStyleSheet("background-color: gray")
+            self.counter = self.counter + 1
 
     def editd(self):
         var = self.label_d
-        self.label_array[1][0] = var
-        self.values_array[1][0] = self.counter
-        if self.counter != 0:
-            self.label_d.setText(str(self.counter))
-            self.label_d.setStyleSheet("background-color: gray")
-        self.counter = self.counter + 1
+        if self.counter < 9 and self.label_array[1][0] != var:
+            self.label_array[1][0] = var
+            self.values_array[1][0] = self.counter
+            if self.counter == 0:
+                self.label_d.setText("")
+                self.label_d.setStyleSheet("border: 3px solid blue")
+            else:
+                self.label_d.setText(str(self.counter))
+                self.label_d.setStyleSheet("background-color: gray")
+            self.counter = self.counter + 1
 
     def edite(self):
         var = self.label_e
-        self.label_array[1][1] = var
-        self.values_array[1][1] = self.counter
-        if self.counter != 0:
-            self.label_e.setText(str(self.counter))
-            self.label_e.setStyleSheet("background-color: gray")
-        self.counter = self.counter + 1
+        if self.counter < 9 and self.label_array[1][1] != var:
+            self.label_array[1][1] = var
+            self.values_array[1][1] = self.counter
+            if self.counter == 0:
+                self.label_e.setText("")
+                self.label_e.setStyleSheet("border: 3px solid blue")
+            else:
+                self.label_e.setText(str(self.counter))
+                self.label_e.setStyleSheet("background-color: gray")
+            self.counter = self.counter + 1
 
     def editf(self):
         var = self.label_f
-        self.label_array[1][2] = var
-        self.values_array[1][2] = self.counter
-        if self.counter != 0:
-            self.label_f.setText(str(self.counter))
-            self.label_f.setStyleSheet("background-color: gray")
-        self.counter = self.counter + 1
+        if self.counter < 9 and self.label_array[1][2] != var:
+            self.label_array[1][2] = var
+            self.values_array[1][2] = self.counter
+            if self.counter == 0:
+                self.label_f.setText("")
+                self.label_f.setStyleSheet("border: 3px solid blue")
+            else:
+                self.label_f.setText(str(self.counter))
+                self.label_f.setStyleSheet("background-color: gray")
+            self.counter = self.counter + 1
 
     def editg(self):
         var = self.label_g
-        self.label_array[2][0] = var
-        self.values_array[2][0] = self.counter
-        if self.counter != 0:
-            self.label_g.setText(str(self.counter))
-            self.label_g.setStyleSheet("background-color: gray")
-        self.counter = self.counter + 1
+        if self.counter < 9 and self.label_array[2][0] != var:
+            self.label_array[2][0] = var
+            self.values_array[2][0] = self.counter
+            if self.counter == 0:
+                self.label_g.setText("")
+                self.label_g.setStyleSheet("border: 3px solid blue")
+            else:
+                self.label_g.setText(str(self.counter))
+                self.label_g.setStyleSheet("background-color: gray")
+            self.counter = self.counter + 1
 
     def edith(self):
         var = self.label_h
-        self.label_array[2][1] = var
-        self.values_array[2][1] = self.counter
-        if self.counter != 0:
-            self.label_h.setText(str(self.counter))
-            self.label_h.setStyleSheet("background-color: gray")
-        self.counter = self.counter + 1
+        if self.counter < 9 and self.label_array[2][1] != var:
+            self.label_array[2][1] = var
+            self.values_array[2][1] = self.counter
+            if self.counter == 0:
+                self.label_h.setText("")
+                self.label_h.setStyleSheet("border: 3px solid blue")
+            else:
+                self.label_h.setText(str(self.counter))
+                self.label_h.setStyleSheet("background-color: gray")
+            self.counter = self.counter + 1
 
     def editi(self):
         var = self.label_i
-        self.label_array[2][2] = var
-        self.values_array[2][2] = self.counter
-        if self.counter != 0:
-            self.label_i.setText(str(self.counter))
-            self.label_i.setStyleSheet("background-color: gray")
-        self.counter = self.counter + 1
-        print(self.label_array)
+        if self.counter < 9 and self.label_array[2][2] != var:
+            self.label_array[2][2] = var
+            self.values_array[2][2] = self.counter
+            if self.counter == 0:
+                self.label_i.setText("")
+                self.label_i.setStyleSheet("border: 3px solid blue")
+            else:
+                self.label_i.setText(str(self.counter))
+                self.label_i.setStyleSheet("background-color: gray")
+            self.counter = self.counter + 1
 
     def run_algorithm(self):
         if self.comboBox.currentText() == "BFS":
@@ -373,7 +408,11 @@ class Ui_MainWindow(object):
 
     def clear(self):
         self.values_array = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
-        self.label_array = []
+        for row in self.label_array:
+            for label in row:
+                label.setText("")
+                label.setStyleSheet("")
+        self.label_array = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
         self.counter = 0
 
 
