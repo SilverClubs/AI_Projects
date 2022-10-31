@@ -304,10 +304,10 @@ class Ui_MainWindow(object):
             self.label_12.setText("Elapsed time: " + str(net_time) + " s")
             self.label_13.setText("Nodes expanded: " + str(expanded_count))
             cost, path, depth = get_path_depth(explored, parent_map)
-            self.label_15.setText("Depth: " + str(depth))
             self.path = path
+            self.label_14.setText("Search depth: " + str(depth))
             if success:
-                self.label_14.setText("Cost: " + str(cost))
+                self.label_15.setText("Path cost: " + str(cost))
                 self.solvable_or_not.setText("This is a solvable problem")
                 self.solvable_or_not.setStyleSheet("background-color: lightGreen")
             else:
@@ -329,10 +329,10 @@ class Ui_MainWindow(object):
             self.label_12.setText("Elapsed time: " + str(net_time) + " s")
             self.label_13.setText("Nodes expanded: " + str(expanded_count))
             cost, path, depth = get_path_depth(explored, parent_map)
-            self.label_15.setText("Depth: " + str(depth))
             self.path = path
+            self.label_14.setText("Search depth: " + str(depth))
             if success:
-                self.label_14.setText("Cost: " + str(cost))
+                self.label_15.setText("Path cost: " + str(cost))
                 self.solvable_or_not.setText("This is a solvable problem")
                 self.solvable_or_not.setStyleSheet("background-color: lightGreen")
             else:
@@ -346,12 +346,13 @@ class Ui_MainWindow(object):
             )
             end = time.time()
             net_time = round((end - start), 6)
-            self.label_12.setText("Elapsed time: " + str(net_time) + " s")
+            self.label_12.setText("Elapsed time: " + str(net_time) + "s")
             self.label_13.setText("Nodes expanded: " + str(expanded_count))
             cost, path, depth = get_path_depth(explored, parent_map)
-            self.label_15.setText("Depth: " + str(depth))
+            self.path = path
+            self.label_14.setText("Search depth: " + str(depth))
             if success:
-                self.label_14.setText("Cost: " + str(cost))
+                self.label_15.setText("Path cost: " + str(cost))
                 self.solvable_or_not.setText("This is a solvable problem")
                 self.solvable_or_not.setStyleSheet("background-color: green")
             else:
@@ -362,45 +363,42 @@ class Ui_MainWindow(object):
         def moves(self):
             print(self.path)
 
-        lenth = len(self.path)
-        temp1 = self.path[lenth - 1]
-        temp2 = self.path[lenth - 2]
-        temparr1 = decompress(temp1)
-        temparr2 = decompress(temp2)
-        i1, j1 = get_row_col(0, temparr1)  # i is row, j is column
-        i2, j2 = get_row_col(0, temparr2)
-        print("Here")
+        length = len(self.path)
+        temp1 = self.path[length - 1]
+        temp2 = self.path[length - 2]
+        temp_arr1 = decompress(temp1)
+        temp_arr2 = decompress(temp2)
+        i1, j1 = get_row_col(0, temp_arr1)  # i is row, j is column
+        i2, j2 = get_row_col(0, temp_arr2)
         if i2 > i1:
-            print("No")
             # move right
-            templab1 = self.label_array[i1][j1]
-            templab2 = self.label_array[i2][j2]
-            templab1.move(templab1.pos() + QPoint(0, 170))
-            templab2.move(templab2.pos() + QPoint(0, -170))
+            temp_lab1 = self.label_array[i1][j1]
+            temp_lab2 = self.label_array[i2][j2]
+            temp_lab1.move(temp_lab1.pos() + QPoint(0, 170))
+            temp_lab2.move(temp_lab2.pos() + QPoint(0, -170))
 
         elif i2 < i1:
             # move left
-            print("Yo")
-            templab1 = self.label_array[i1][j1]
-            templab2 = self.label_array[i2][j2]
-            templab1.move(templab1.pos() + QPoint(0, -170))
-            templab2.move(templab2.pos() + QPoint(0, 170))
+            temp_lab1 = self.label_array[i1][j1]
+            temp_lab2 = self.label_array[i2][j2]
+            temp_lab1.move(temp_lab1.pos() + QPoint(0, -170))
+            temp_lab2.move(temp_lab2.pos() + QPoint(0, 170))
 
         elif j2 > j1:
-            templab1 = self.label_array[i1][j1]
-            templab2 = self.label_array[i2][j2]
-            templab1.move(templab1.pos() + QPoint(170, 0))
-            templab2.move(templab2.pos() + QPoint(-170, 0))
+            temp_lab1 = self.label_array[i1][j1]
+            temp_lab2 = self.label_array[i2][j2]
+            temp_lab1.move(temp_lab1.pos() + QPoint(170, 0))
+            temp_lab2.move(temp_lab2.pos() + QPoint(-170, 0))
 
         elif j2 < j1:
-            templab1 = self.label_array[i1][j1]
-            templab2 = self.label_array[i2][j2]
-            templab1.move(templab1.pos() + QPoint(-170, 0))
-            templab2.move(templab2.pos() + QPoint(170, 0))
+            temp_lab1 = self.label_array[i1][j1]
+            temp_lab2 = self.label_array[i2][j2]
+            temp_lab1.move(temp_lab1.pos() + QPoint(-170, 0))
+            temp_lab2.move(temp_lab2.pos() + QPoint(170, 0))
 
-        swaplab = self.label_array[i1][j1]
+        swap_lab = self.label_array[i1][j1]
         self.label_array[i1][j1] = self.label_array[i2][j2]
-        self.label_array[i2][j2] = swaplab
+        self.label_array[i2][j2] = swap_lab
         self.path.pop()
 
     def clear(self):
