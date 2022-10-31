@@ -35,7 +35,7 @@ class Ui_MainWindow(object):
         self.label.setGeometry(QtCore.QRect(0, 0, 531, 531))
         self.label.setFrameShape(QtWidgets.QFrame.WinPanel)
         self.label.setText("")
-        self.label.setPixmap(QtGui.QPixmap("background.jpg"))
+        # self.label.setPixmap(QtGui.QPixmap("blackbackground.png"))
         self.label.setObjectName("label")
         self.label_a = Label(self.centralwidget)
         self.label_a.setGeometry(QtCore.QRect(10, 10, 171, 171))
@@ -185,7 +185,7 @@ class Ui_MainWindow(object):
             self.values_array[0][0] = self.counter
             if self.counter == 0:
                 self.label_a.setText("")
-                self.label_a.setStyleSheet("border: 3px solid blue")
+                self.label_a.setStyleSheet("")
             else:
                 self.label_a.setText(str(self.counter))
                 self.label_a.setStyleSheet("background-color: gray")
@@ -198,7 +198,7 @@ class Ui_MainWindow(object):
             self.values_array[0][1] = self.counter
             if self.counter == 0:
                 self.label_b.setText("")
-                self.label_b.setStyleSheet("border: 3px solid blue")
+                self.label_b.setStyleSheet("")
             else:
                 self.label_b.setText(str(self.counter))
                 self.label_b.setStyleSheet("background-color: gray")
@@ -211,7 +211,7 @@ class Ui_MainWindow(object):
             self.values_array[0][2] = self.counter
             if self.counter == 0:
                 self.label_c.setText("")
-                self.label_c.setStyleSheet("border: 3px solid blue")
+                self.label_c.setStyleSheet("")
             else:
                 self.label_c.setText(str(self.counter))
                 self.label_c.setStyleSheet("background-color: gray")
@@ -224,7 +224,7 @@ class Ui_MainWindow(object):
             self.values_array[1][0] = self.counter
             if self.counter == 0:
                 self.label_d.setText("")
-                self.label_d.setStyleSheet("border: 3px solid blue")
+                self.label_d.setStyleSheet("")
             else:
                 self.label_d.setText(str(self.counter))
                 self.label_d.setStyleSheet("background-color: gray")
@@ -237,7 +237,7 @@ class Ui_MainWindow(object):
             self.values_array[1][1] = self.counter
             if self.counter == 0:
                 self.label_e.setText("")
-                self.label_e.setStyleSheet("border: 3px solid blue")
+                self.label_e.setStyleSheet("")
             else:
                 self.label_e.setText(str(self.counter))
                 self.label_e.setStyleSheet("background-color: gray")
@@ -250,7 +250,7 @@ class Ui_MainWindow(object):
             self.values_array[1][2] = self.counter
             if self.counter == 0:
                 self.label_f.setText("")
-                self.label_f.setStyleSheet("border: 3px solid blue")
+                self.label_f.setStyleSheet("")
             else:
                 self.label_f.setText(str(self.counter))
                 self.label_f.setStyleSheet("background-color: gray")
@@ -263,7 +263,7 @@ class Ui_MainWindow(object):
             self.values_array[2][0] = self.counter
             if self.counter == 0:
                 self.label_g.setText("")
-                self.label_g.setStyleSheet("border: 3px solid blue")
+                self.label_g.setStyleSheet("")
             else:
                 self.label_g.setText(str(self.counter))
                 self.label_g.setStyleSheet("background-color: gray")
@@ -276,7 +276,7 @@ class Ui_MainWindow(object):
             self.values_array[2][1] = self.counter
             if self.counter == 0:
                 self.label_h.setText("")
-                self.label_h.setStyleSheet("border: 3px solid blue")
+                self.label_h.setStyleSheet("")
             else:
                 self.label_h.setText(str(self.counter))
                 self.label_h.setStyleSheet("background-color: gray")
@@ -289,7 +289,7 @@ class Ui_MainWindow(object):
             self.values_array[2][2] = self.counter
             if self.counter == 0:
                 self.label_i.setText("")
-                self.label_i.setStyleSheet("border: 3px solid blue")
+                self.label_i.setStyleSheet("")
             else:
                 self.label_i.setText(str(self.counter))
                 self.label_i.setStyleSheet("background-color: gray")
