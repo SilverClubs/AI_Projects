@@ -213,7 +213,7 @@ test = [
 if __name__ == "__main__":
 
     start = time.time()
-    success, expanded_count, explored, parent_map = a_star(test, manhattan)
+    success, expanded_count, explored, parent_map = bfs(test)
     end = time.time()
     print(f"Elapsed time: {end-start} seconds")
     print(f"Nodes expanded: {expanded_count}")
