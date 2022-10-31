@@ -10,13 +10,15 @@ goal = [
     [6, 7, 8],
 ]
 
+pow_10 = [1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000]
+
 
 def compress(arr):
     num = 0
     i = 0
     for row in range(2, -1, -1):
         for col in range(2, -1, -1):
-            num += arr[row][col] * pow(10, i)
+            num += arr[row][col] * pow_10[i]
             i += 1
     return num
 
@@ -27,17 +29,11 @@ def decompress(num):
         [0, 0, 0],
         [0, 0, 0],
     ]
-    end = False
     for row in range(2, -1, -1):
         for col in range(2, -1, -1):
             rem = int(num % 10)
             arr[row][col] = rem
             num = int(num / 10)
-            if num == 0:
-                end = True
-                break
-        if end:
-            break
     return arr
 
 
@@ -214,7 +210,7 @@ test = [
 if __name__ == "__main__":
 
     start = time.time()
-    success, expanded_count, parent_map = a_star(test, manhattan)
+    success, expanded_count, parent_map = bfs(test)
     end = time.time()
     print(f"Elapsed time: {end-start} seconds")
     print(f"Nodes expanded: {expanded_count}")
