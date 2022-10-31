@@ -1,6 +1,6 @@
 from math import sqrt
 from copy import deepcopy
-from queue import Queue, PriorityQueue
+from queue import Queue, LifoQueue, PriorityQueue
 import time
 
 
@@ -122,6 +122,35 @@ def bfs(initial_state):
     return (False, expanded_count, explored, parent_map)
 
 
+def dfs(initial_state):
+    parent_map = {}
+    parent_map[compress(initial_state)] = compress(initial_state)
+    frontier = LifoQueue()
+    frontier.put(compress(initial_state))
+    frontier_set = set()
+    frontier_set.add(compress(initial_state))
+    explored = set()
+    expanded_count = 0
+
+    while not frontier.empty():
+        state = frontier.get()
+        explored.add(state)
+        state = decompress(state)
+        if goal_check(state):
+            return (True, expanded_count, explored, parent_map)
+        neighbors = expand(state)
+        state = compress(state)
+        expanded_count += 1
+
+        for neighbor in neighbors:
+            if neighbor not in explored and neighbor not in frontier_set:
+                frontier.put(neighbor)
+                frontier_set.add(neighbor)
+                parent_map[neighbor] = state
+
+    return (False, expanded_count, explored, parent_map)
+
+
 def a_star(initial_state, heuristic):
     parent_map = {}
     parent_map[compress(initial_state)] = compress(initial_state)
@@ -213,7 +242,7 @@ test = [
 if __name__ == "__main__":
 
     start = time.time()
-    success, expanded_count, explored, parent_map = bfs(test)
+    success, expanded_count, explored, parent_map = dfs(initial)
     end = time.time()
     print(f"Elapsed time: {end-start} seconds")
     print(f"Nodes expanded: {expanded_count}")

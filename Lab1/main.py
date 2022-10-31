@@ -301,7 +301,7 @@ class Ui_MainWindow(object):
             success, expanded_count, explored, parent_map = bfs(self.values_array)
             end = time.time()
             net_time = round((end - start), 6)
-            self.label_12.setText("Elapsed time: " + str(net_time) + " s")
+            self.label_12.setText("Elapsed time: " + str(net_time) + "s")
             self.label_13.setText("Nodes expanded: " + str(expanded_count))
             cost, path, depth = get_path_depth(explored, parent_map)
             self.path = path
@@ -313,11 +313,24 @@ class Ui_MainWindow(object):
             else:
                 self.solvable_or_not.setText("This is an unsolvable problem")
                 self.solvable_or_not.setStyleSheet("background-color: #FF6961")
-            # BFS call here
 
         if self.comboBox.currentText() == "DFS":
-            print()
-            # BFS call here
+            start = time.time()
+            success, expanded_count, explored, parent_map = dfs(self.values_array)
+            end = time.time()
+            net_time = round((end - start), 6)
+            self.label_12.setText("Elapsed time: " + str(net_time) + "s")
+            self.label_13.setText("Nodes expanded: " + str(expanded_count))
+            cost, path, depth = get_path_depth(explored, parent_map)
+            self.path = path
+            self.label_14.setText("Search depth: " + str(depth))
+            if success:
+                self.label_15.setText("Path cost: " + str(cost))
+                self.solvable_or_not.setText("This is a solvable problem")
+                self.solvable_or_not.setStyleSheet("background-color: lightGreen")
+            else:
+                self.solvable_or_not.setText("This is an unsolvable problem")
+                self.solvable_or_not.setStyleSheet("background-color: #FF6961")
 
         if self.comboBox.currentText() == "A* (manhattan)":
             start = time.time()
@@ -326,7 +339,7 @@ class Ui_MainWindow(object):
             )
             end = time.time()
             net_time = round((end - start), 6)
-            self.label_12.setText("Elapsed time: " + str(net_time) + " s")
+            self.label_12.setText("Elapsed time: " + str(net_time) + "s")
             self.label_13.setText("Nodes expanded: " + str(expanded_count))
             cost, path, depth = get_path_depth(explored, parent_map)
             self.path = path
@@ -354,10 +367,10 @@ class Ui_MainWindow(object):
             if success:
                 self.label_15.setText("Path cost: " + str(cost))
                 self.solvable_or_not.setText("This is a solvable problem")
-                self.solvable_or_not.setStyleSheet("background-color: green")
+                self.solvable_or_not.setStyleSheet("background-color: lightGreen")
             else:
                 self.solvable_or_not.setText("This is an unsolvable problem")
-                self.solvable_or_not.setStyleSheet("background-color: red")
+                self.solvable_or_not.setStyleSheet("background-color: #FF6961")
 
     def moves(self):
         def moves(self):
