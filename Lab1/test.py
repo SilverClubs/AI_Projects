@@ -10,12 +10,19 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QHBoxLayout, QVBoxLayout, QLabel, QShortcut
-from PyQt5.QtCore import Qt, QPoint
+from PyQt5.QtWidgets import (
+    QApplication,
+    QWidget,
+    QHBoxLayout,
+    QVBoxLayout,
+    QLabel,
+    QShortcut,
+)
+from PyQt5.QtCore import Qt, QPoint, QPropertyAnimation
 from PyQt5.QtGui import QKeySequence
 
-class Ui_MainWindow(object):
 
+class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         self.hi = ""
         MainWindow.setObjectName("MainWindow")
@@ -25,7 +32,9 @@ class Ui_MainWindow(object):
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(290, 210, 101, 81))
         self.label.setObjectName("label")
-        self.pushButton = QtWidgets.QPushButton(self.centralwidget , clicked=lambda: self.move())
+        self.pushButton = QtWidgets.QPushButton(
+            self.centralwidget, clicked=lambda: self.move()
+        )
         self.pushButton.setGeometry(QtCore.QRect(270, 380, 75, 23))
         self.pushButton.setObjectName("pushButton")
         MainWindow.setCentralWidget(self.centralwidget)
@@ -48,17 +57,22 @@ class Ui_MainWindow(object):
         self.pushButton.setText(_translate("MainWindow", "PushButton"))
 
     def move(self):
-        self.hi.move(self.label.pos() + QPoint(-15,0))
+        self.animation = QPropertyAnimation(self.label, b"pos")
+        x = self.label.x()
+        self.animation.setDuration(500)
+        self.animation.setEndValue(QPoint(x + 50, 180))
+        self.animation.start()
+
 
 if __name__ == "__main__":
     import sys
+
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
     sys.exit(app.exec_())
-
 
     """
         def moves(self):
