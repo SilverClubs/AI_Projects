@@ -405,8 +405,9 @@ class Ui_MainWindow(object):
         self.values_array = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
         for row in self.label_array:
             for label in row:
-                label.setText("")
-                label.setStyleSheet("")
+                if label != 0:
+                    label.setText("")
+                    label.setStyleSheet("")
         self.label_array = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
         self.counter = 0
 
