@@ -108,7 +108,7 @@ def bfs(initial_state):
         explored.add(state)
         state = decompress(state)
         if goal_check(state):
-            return (True, expanded_count, parent_map)
+            return (True, expanded_count, explored, parent_map)
         neighbors = expand(state)
         state = compress(state)
         expanded_count += 1
@@ -119,7 +119,7 @@ def bfs(initial_state):
                 frontier_set.add(neighbor)
                 parent_map[neighbor] = state
 
-    return (False, expanded_count, parent_map)
+    return (False, expanded_count, explored, parent_map)
 
 
 def a_star(initial_state, heuristic):
@@ -140,7 +140,7 @@ def a_star(initial_state, heuristic):
         explored.add(state)
         state = decompress(state)
         if goal_check(state):
-            return (True, expanded_count, parent_map)
+            return (True, expanded_count, explored, parent_map)
 
         neighbors = expand(state)
         state = compress(state)
@@ -153,10 +153,10 @@ def a_star(initial_state, heuristic):
                     frontier_map[neighbor] = cost
                     parent_map[neighbor] = state
 
-    return (False, expanded_count, parent_map)
+    return (False, expanded_count, explored, parent_map)
 
 
-def get_path_depth(parent_map):
+def get_path_depth(explored, parent_map):
     path = []
     node = compress(goal)
     if node in parent_map:
@@ -185,8 +185,11 @@ def get_path_depth(parent_map):
                 break
             cost_map[node] = cost
             cost -= 1
+    max_depth = 0
+    for node in explored:
+        max_depth = max(max_depth, cost_map[node])
 
-    return (len(path) - 1, path, cost_map[max(cost_map, key=cost_map.get)])
+    return (len(path) - 1, path, max_depth)
 
 
 initial = [
@@ -210,11 +213,11 @@ test = [
 if __name__ == "__main__":
 
     start = time.time()
-    success, expanded_count, parent_map = bfs(test)
+    success, expanded_count, explored, parent_map = a_star(test, manhattan)
     end = time.time()
     print(f"Elapsed time: {end-start} seconds")
     print(f"Nodes expanded: {expanded_count}")
-    cost, path, depth = get_path_depth(parent_map)
+    cost, path, depth = get_path_depth(explored, parent_map)
     print(f"Search depth: {depth}")
     if success:
         print(f"Path found. Cost: {cost}.")
