@@ -423,6 +423,12 @@ class Ui_MainWindow(object):
                     label.setStyleSheet("")
         self.label_array = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
         self.counter = 0
+        self.label_12.setText("")
+        self.label_13.setText("")
+        self.label_14.setText("")
+        self.label_15.setText("")
+        self.solvable_or_not.setText("")
+        self.solvable_or_not.setStyleSheet("")
 
 
 if __name__ == "__main__":
