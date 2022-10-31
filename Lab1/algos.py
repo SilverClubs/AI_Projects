@@ -165,24 +165,25 @@ def a_star(initial_state, heuristic):
 
     while len(frontier):
         state = heappop(frontier)
-        h = heuristic(decompress(state[1]))
-        g = state[0] - h
-        state = state[1]
-        explored.add(state)
-        state = decompress(state)
-        if goal_check(state):
-            return (True, expanded_count, explored, parent_map)
+        if state[1] not in explored:
+            h = heuristic(decompress(state[1]))
+            g = state[0] - h
+            state = state[1]
+            explored.add(state)
+            state = decompress(state)
+            if goal_check(state):
+                return (True, expanded_count, explored, parent_map)
 
-        neighbors = expand(state)
-        state = compress(state)
-        expanded_count += 1
-        for neighbor in neighbors:
-            if neighbor not in explored:
-                cost = g + 1 + heuristic(decompress(neighbor))
-                if neighbor not in frontier_map or cost < frontier_map[neighbor]:
-                    heappush(frontier, (cost, neighbor))
-                    frontier_map[neighbor] = cost
-                    parent_map[neighbor] = state
+            neighbors = expand(state)
+            state = compress(state)
+            expanded_count += 1
+            for neighbor in neighbors:
+                if neighbor not in explored:
+                    cost = g + 1 + heuristic(decompress(neighbor))
+                    if neighbor not in frontier_map or cost < frontier_map[neighbor]:
+                        heappush(frontier, (cost, neighbor))
+                        frontier_map[neighbor] = cost
+                        parent_map[neighbor] = state
 
     return (False, expanded_count, explored, parent_map)
 
@@ -244,7 +245,7 @@ test = [
 if __name__ == "__main__":
 
     start = time.time()
-    success, expanded_count, explored, parent_map = bfs(unsolvable_state)
+    success, expanded_count, explored, parent_map = a_star(unsolvable_state, euclidean)
     end = time.time()
     print(f"Elapsed time: {end-start} seconds")
     print(f"Nodes expanded: {expanded_count}")
