@@ -1,6 +1,7 @@
 from math import sqrt
 from copy import deepcopy
-from queue import Queue, LifoQueue, PriorityQueue
+from collections import deque
+from heapq import heappush, heappop
 import time
 
 
@@ -96,15 +97,15 @@ def expand(cur_state):  # returns compressed states
 def bfs(initial_state):
     parent_map = {}
     parent_map[compress(initial_state)] = compress(initial_state)
-    frontier = Queue()
-    frontier.put(compress(initial_state))
+    frontier = deque()
+    frontier.append(compress(initial_state))
     frontier_set = set()
     frontier_set.add(compress(initial_state))
     explored = set()
     expanded_count = 0
 
-    while not frontier.empty():
-        state = frontier.get()
+    while len(frontier):
+        state = frontier.popleft()
         explored.add(state)
         state = decompress(state)
         if goal_check(state):
@@ -114,8 +115,8 @@ def bfs(initial_state):
         expanded_count += 1
 
         for neighbor in neighbors:
-            if neighbor not in explored and neighbor not in frontier_set:
-                frontier.put(neighbor)
+            if (neighbor not in explored) and (neighbor not in frontier_set):
+                frontier.append(neighbor)
                 frontier_set.add(neighbor)
                 parent_map[neighbor] = state
 
@@ -125,15 +126,15 @@ def bfs(initial_state):
 def dfs(initial_state):
     parent_map = {}
     parent_map[compress(initial_state)] = compress(initial_state)
-    frontier = LifoQueue()
-    frontier.put(compress(initial_state))
+    frontier = deque()
+    frontier.append(compress(initial_state))
     frontier_set = set()
     frontier_set.add(compress(initial_state))
     explored = set()
     expanded_count = 0
 
-    while not frontier.empty():
-        state = frontier.get()
+    while len(frontier):
+        state = frontier.pop()
         explored.add(state)
         state = decompress(state)
         if goal_check(state):
@@ -143,8 +144,8 @@ def dfs(initial_state):
         expanded_count += 1
 
         for neighbor in neighbors:
-            if neighbor not in explored and neighbor not in frontier_set:
-                frontier.put(neighbor)
+            if (neighbor not in explored) and (neighbor not in frontier_set):
+                frontier.append(neighbor)
                 frontier_set.add(neighbor)
                 parent_map[neighbor] = state
 
@@ -154,15 +155,15 @@ def dfs(initial_state):
 def a_star(initial_state, heuristic):
     parent_map = {}
     parent_map[compress(initial_state)] = compress(initial_state)
-    frontier = PriorityQueue()
-    frontier.put((heuristic(initial_state), compress(initial_state)))
+    frontier = []
+    heappush(frontier, (heuristic(initial_state), compress(initial_state)))
     frontier_map = {}
     frontier_map[compress(initial_state)] = heuristic(initial_state)
     explored = set()
     expanded_count = 0
 
-    while not frontier.empty():
-        state = frontier.get()
+    while len(frontier):
+        state = heappop(frontier)
         h = heuristic(decompress(state[1]))
         g = state[0] - h
         state = state[1]
@@ -178,7 +179,7 @@ def a_star(initial_state, heuristic):
             if neighbor not in explored:
                 cost = g + 1 + heuristic(decompress(neighbor))
                 if neighbor not in frontier_map or cost < frontier_map[neighbor]:
-                    frontier.put((cost, neighbor))
+                    heappush(frontier, (cost, neighbor))
                     frontier_map[neighbor] = cost
                     parent_map[neighbor] = state
 
@@ -242,7 +243,7 @@ test = [
 if __name__ == "__main__":
 
     start = time.time()
-    success, expanded_count, explored, parent_map = dfs(initial)
+    success, expanded_count, explored, parent_map = bfs(unsolvable_state)
     end = time.time()
     print(f"Elapsed time: {end-start} seconds")
     print(f"Nodes expanded: {expanded_count}")
