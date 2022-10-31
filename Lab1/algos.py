@@ -1,6 +1,6 @@
 from math import sqrt
 from copy import deepcopy
-from queue import PriorityQueue
+from queue import Queue, PriorityQueue
 import time
 
 
@@ -97,6 +97,35 @@ def expand(cur_state):  # returns compressed states
     return states
 
 
+def bfs(initial_state):
+    parent_map = {}
+    parent_map[compress(initial_state)] = compress(initial_state)
+    frontier = Queue()
+    frontier.put(compress(initial_state))
+    frontier_set = set()
+    frontier_set.add(compress(initial_state))
+    explored = set()
+    expanded_count = 0
+
+    while not frontier.empty():
+        state = frontier.get()
+        explored.add(state)
+        state = decompress(state)
+        if goal_check(state):
+            return (True, expanded_count, parent_map)
+        neighbors = expand(state)
+        state = compress(state)
+        expanded_count += 1
+
+        for neighbor in neighbors:
+            if neighbor not in explored and neighbor not in frontier_set:
+                frontier.put(neighbor)
+                frontier_set.add(neighbor)
+                parent_map[neighbor] = state
+
+    return (False, expanded_count, parent_map)
+
+
 def a_star(initial_state, heuristic):
     parent_map = {}
     parent_map[compress(initial_state)] = compress(initial_state)
@@ -181,17 +210,18 @@ test = [
     [0, 4, 3],
     [7, 6, 5],
 ]
-"""
-start = time.time()
-success, expanded_count, parent_map = a_star(unsolvable_state, manhattan)
-end = time.time()
-print(f"Elapsed time: {end-start} seconds")
-print(f"Nodes expanded: {expanded_count}")
-cost, path, depth = get_path_depth(parent_map)
-print(f"Search depth: {depth}")
-if success:
-    print(f"Path found. Cost: {cost}.")
-    print(f"Path: {path}")
-else:
-    print(f"Path not found.")
-"""
+
+if __name__ == "__main__":
+
+    start = time.time()
+    success, expanded_count, parent_map = a_star(test, manhattan)
+    end = time.time()
+    print(f"Elapsed time: {end-start} seconds")
+    print(f"Nodes expanded: {expanded_count}")
+    cost, path, depth = get_path_depth(parent_map)
+    print(f"Search depth: {depth}")
+    if success:
+        print(f"Path found. Cost: {cost}.")
+        print(f"Path: {path}")
+    else:
+        print(f"Path not found.")
