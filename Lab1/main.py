@@ -1,7 +1,10 @@
+import time
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QLabel
+from PyQt5.QtCore import Qt, QPoint
 from algos import *
 import math
 
@@ -19,9 +22,11 @@ class Label(QLabel):
 class Ui_MainWindow(object):
 
     def setupUi(self, MainWindow):
+        self.path = []
         self.counter = 0
-        self.label_array = []
+        self.label_array = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
         self.values_array = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+        self.flag = 0
 
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(848, 576)
@@ -114,7 +119,7 @@ class Ui_MainWindow(object):
         self.pushButton = QtWidgets.QPushButton(self.centralwidget, clicked=lambda: self.run_algorithm())
         self.pushButton.setGeometry(QtCore.QRect(550, 90, 121, 41))
         self.pushButton.setObjectName("pushButton")
-        self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget, clicked=lambda: self.moves())
         self.pushButton_2.setGeometry(QtCore.QRect(710, 90, 121, 41))
         self.pushButton_2.setObjectName("pushButton_2")
         self.label_12 = QtWidgets.QLabel(self.centralwidget)
@@ -148,6 +153,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
+
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
@@ -177,7 +183,7 @@ class Ui_MainWindow(object):
 
     def edita(self):
         var = self.label_a
-        self.label_array.append(var)
+        self.label_array[0][0] = var
         self.values_array[0][0] = self.counter
         if self.counter != 0:
             self.label_a.setText(str(self.counter))
@@ -186,7 +192,7 @@ class Ui_MainWindow(object):
 
     def editb(self):
         var = self.label_b
-        self.label_array.append(var)
+        self.label_array[0][1] = var
         self.values_array[0][1] = self.counter
         if self.counter != 0:
             self.label_b.setText(str(self.counter))
@@ -195,7 +201,7 @@ class Ui_MainWindow(object):
 
     def editc(self):
         var = self.label_c
-        self.label_array.append(var)
+        self.label_array[0][2] = var
         self.values_array[0][2] = self.counter
         if self.counter != 0:
             self.label_c.setText(str(self.counter))
@@ -204,7 +210,7 @@ class Ui_MainWindow(object):
 
     def editd(self):
         var = self.label_d
-        self.label_array.append(var)
+        self.label_array[1][0] = var
         self.values_array[1][0] = self.counter
         if self.counter != 0:
             self.label_d.setText(str(self.counter))
@@ -213,7 +219,7 @@ class Ui_MainWindow(object):
 
     def edite(self):
         var = self.label_e
-        self.label_array.append(var)
+        self.label_array[1][1] = var
         self.values_array[1][1] = self.counter
         if self.counter != 0:
             self.label_e.setText(str(self.counter))
@@ -222,7 +228,7 @@ class Ui_MainWindow(object):
 
     def editf(self):
         var = self.label_f
-        self.label_array.append(var)
+        self.label_array[1][2] = var
         self.values_array[1][2] = self.counter
         if self.counter != 0:
             self.label_f.setText(str(self.counter))
@@ -231,7 +237,7 @@ class Ui_MainWindow(object):
 
     def editg(self):
         var = self.label_g
-        self.label_array.append(var)
+        self.label_array[2][0] = var
         self.values_array[2][0] = self.counter
         if self.counter != 0:
             self.label_g.setText(str(self.counter))
@@ -240,7 +246,7 @@ class Ui_MainWindow(object):
 
     def edith(self):
         var = self.label_h
-        self.label_array.append(var)
+        self.label_array[2][1] = var
         self.values_array[2][1] = self.counter
         if self.counter != 0:
             self.label_h.setText(str(self.counter))
@@ -249,21 +255,13 @@ class Ui_MainWindow(object):
 
     def editi(self):
         var = self.label_i
-        self.label_array.append(var)
+        self.label_array[2][2] = var
         self.values_array[2][2] = self.counter
         if self.counter != 0:
             self.label_i.setText(str(self.counter))
             self.label_i.setStyleSheet("background-color: gray")
         self.counter = self.counter + 1
-
-    def editj(self):
-        var = self.label_j
-        self.label_array.append(var)
-        self.values_array.append(self.counter)
-        if self.counter != 0:
-            self.label_j.setText(str(self.counter))
-            self.label_j.setStyleSheet("background-color: gray")
-        self.counter = self.counter + 1
+        print(self.label_array)
 
     def run_algorithm(self):
         if self.comboBox.currentText() == "BFS":
@@ -283,6 +281,7 @@ class Ui_MainWindow(object):
             self.label_13.setText("Nodes expanded: " + str(expanded_count))
             cost, path, depth = get_path_depth(parent_map)
             self.label_15.setText("Depth: " + str(depth))
+            self.path = path
             if success:
                 self.label_14.setText("Cost: " + str(cost))
                 self.solvable_or_not.setText("This is a solvable problem")
@@ -307,6 +306,51 @@ class Ui_MainWindow(object):
             else:
                 self.solvable_or_not.setText("This is an unsolvable problem")
                 self.solvable_or_not.setStyleSheet("background-color: red")
+
+    def moves(self):
+        def moves(self):
+            print(self.path)
+
+        lenth = len(self.path)
+        temp1 = self.path[lenth - 1]
+        temp2 = self.path[lenth - 2]
+        temparr1 = decompress(temp1)
+        temparr2 = decompress(temp2)
+        i1, j1 = get_row_col(0, temparr1)  # i is row, j is column
+        i2, j2 = get_row_col(0, temparr2)
+        print("Here")
+        if i2 > i1:
+            print("No")
+            # move right
+            templab1 = self.label_array[i1][j1]
+            templab2 = self.label_array[i2][j2]
+            templab1.move(templab1.pos() + QPoint(0, 170))
+            templab2.move(templab2.pos() + QPoint(0, -170))
+
+        elif i2 < i1:
+            # move left
+            print("Yo")
+            templab1 = self.label_array[i1][j1]
+            templab2 = self.label_array[i2][j2]
+            templab1.move(templab1.pos() + QPoint(0, -170))
+            templab2.move(templab2.pos() + QPoint(0, 170))
+
+        elif j2 > j1:
+            templab1 = self.label_array[i1][j1]
+            templab2 = self.label_array[i2][j2]
+            templab1.move(templab1.pos() + QPoint(170, 0))
+            templab2.move(templab2.pos() + QPoint(-170, 0))
+
+        elif j2 < j1:
+            templab1 = self.label_array[i1][j1]
+            templab2 = self.label_array[i2][j2]
+            templab1.move(templab1.pos() + QPoint(-170, 0))
+            templab2.move(templab2.pos() + QPoint(170, 0))
+
+        swaplab = self.label_array[i1][j1]
+        self.label_array[i1][j1] = self.label_array[i2][j2]
+        self.label_array[i2][j2] = swaplab
+        self.path.pop()
 
 
     def clear(self):
