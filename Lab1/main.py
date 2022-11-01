@@ -118,6 +118,7 @@ class Ui_MainWindow(object):
         )
         self.pushButton.setGeometry(QtCore.QRect(550, 90, 121, 41))
         self.pushButton.setObjectName("pushButton")
+        self.pushButton.setEnabled(False)
         self.pushButton_2 = QtWidgets.QPushButton(
             self.centralwidget, clicked=lambda: self.moves()
         )
@@ -189,6 +190,8 @@ class Ui_MainWindow(object):
                 self.label_a.setText(str(self.counter))
                 self.label_a.setStyleSheet("background-color: gray")
             self.counter = self.counter + 1
+            if self.counter == 9:
+                self.pushButton.setEnabled(True)
 
     def editb(self):
         var = self.label_b
@@ -202,6 +205,8 @@ class Ui_MainWindow(object):
                 self.label_b.setText(str(self.counter))
                 self.label_b.setStyleSheet("background-color: gray")
             self.counter = self.counter + 1
+            if self.counter == 9:
+                self.pushButton.setEnabled(True)
 
     def editc(self):
         var = self.label_c
@@ -215,6 +220,8 @@ class Ui_MainWindow(object):
                 self.label_c.setText(str(self.counter))
                 self.label_c.setStyleSheet("background-color: gray")
             self.counter = self.counter + 1
+            if self.counter == 9:
+                self.pushButton.setEnabled(True)
 
     def editd(self):
         var = self.label_d
@@ -228,6 +235,8 @@ class Ui_MainWindow(object):
                 self.label_d.setText(str(self.counter))
                 self.label_d.setStyleSheet("background-color: gray")
             self.counter = self.counter + 1
+            if self.counter == 9:
+                self.pushButton.setEnabled(True)
 
     def edite(self):
         var = self.label_e
@@ -241,6 +250,8 @@ class Ui_MainWindow(object):
                 self.label_e.setText(str(self.counter))
                 self.label_e.setStyleSheet("background-color: gray")
             self.counter = self.counter + 1
+            if self.counter == 9:
+                self.pushButton.setEnabled(True)
 
     def editf(self):
         var = self.label_f
@@ -254,6 +265,8 @@ class Ui_MainWindow(object):
                 self.label_f.setText(str(self.counter))
                 self.label_f.setStyleSheet("background-color: gray")
             self.counter = self.counter + 1
+            if self.counter == 9:
+                self.pushButton.setEnabled(True)
 
     def editg(self):
         var = self.label_g
@@ -267,6 +280,8 @@ class Ui_MainWindow(object):
                 self.label_g.setText(str(self.counter))
                 self.label_g.setStyleSheet("background-color: gray")
             self.counter = self.counter + 1
+            if self.counter == 9:
+                self.pushButton.setEnabled(True)
 
     def edith(self):
         var = self.label_h
@@ -280,6 +295,8 @@ class Ui_MainWindow(object):
                 self.label_h.setText(str(self.counter))
                 self.label_h.setStyleSheet("background-color: gray")
             self.counter = self.counter + 1
+            if self.counter == 9:
+                self.pushButton.setEnabled(True)
 
     def editi(self):
         var = self.label_i
@@ -293,6 +310,8 @@ class Ui_MainWindow(object):
                 self.label_i.setText(str(self.counter))
                 self.label_i.setStyleSheet("background-color: gray")
             self.counter = self.counter + 1
+            if self.counter == 9:
+                self.pushButton.setEnabled(True)
 
     def run_algorithm(self):
         if self.counter == 9:
@@ -478,7 +497,6 @@ class Ui_MainWindow(object):
         self.label_h.setGeometry(QtCore.QRect(180, 350, 170, 170))
         self.label_g.setGeometry(QtCore.QRect(10, 350, 170, 170))
 
-        self.pushButton.setEnabled(True)
         self.pushButton_2.setEnabled(False)
 
 
