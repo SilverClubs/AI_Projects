@@ -1,9 +1,9 @@
 import time
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QLabel
-from PyQt5.QtCore import Qt, QPoint, QEasingCurve, pyqtSignal, QPropertyAnimation
+from PyQt5.QtCore import QPoint, QEasingCurve, pyqtSignal, QPropertyAnimation
 from algos import *
 import math
 
@@ -34,7 +34,6 @@ class Ui_MainWindow(object):
         self.label.setGeometry(QtCore.QRect(0, 0, 531, 531))
         self.label.setFrameShape(QtWidgets.QFrame.WinPanel)
         self.label.setText("")
-        # self.label.setPixmap(QtGui.QPixmap("blackbackground.png"))
         self.label.setObjectName("label")
         self.label_a = Label(self.centralwidget)
         self.label_a.setGeometry(QtCore.QRect(10, 10, 170, 170))
@@ -295,85 +294,86 @@ class Ui_MainWindow(object):
             self.counter = self.counter + 1
 
     def run_algorithm(self):
-        if self.comboBox.currentText() == "BFS":
-            start = time.time()
-            success, expanded_count, explored, parent_map = bfs(self.values_array)
-            end = time.time()
-            net_time = round((end - start), 6)
-            self.label_12.setText("Elapsed time: " + str(net_time) + "s")
-            self.label_13.setText("Nodes expanded: " + str(expanded_count))
-            cost, path, depth = get_path_depth(explored, parent_map)
-            self.path = path
-            self.label_14.setText("Search depth: " + str(depth))
-            if success:
-                self.label_15.setText("Path cost: " + str(cost))
-                print_path(path)
-                self.solvable_or_not.setText("This is a solvable problem")
-                self.solvable_or_not.setStyleSheet("background-color: lightGreen")
-            else:
-                self.solvable_or_not.setText("This is an unsolvable problem")
-                self.solvable_or_not.setStyleSheet("background-color: #FF6961")
+        if self.counter == 9:
+            if self.comboBox.currentText() == "BFS":
+                start = time.time()
+                success, expanded_count, explored, parent_map = bfs(self.values_array)
+                end = time.time()
+                net_time = round((end - start), 6)
+                self.label_12.setText("Elapsed time: " + str(net_time) + "s")
+                self.label_13.setText("Nodes expanded: " + str(expanded_count))
+                cost, path, depth = get_path_depth(explored, parent_map)
+                self.path = path
+                self.label_14.setText("Search depth: " + str(depth))
+                if success:
+                    self.label_15.setText("Path cost: " + str(cost))
+                    print_path(path)
+                    self.solvable_or_not.setText("This is a solvable problem")
+                    self.solvable_or_not.setStyleSheet("background-color: lightGreen")
+                else:
+                    self.solvable_or_not.setText("This is an unsolvable problem")
+                    self.solvable_or_not.setStyleSheet("background-color: #FF6961")
 
-        if self.comboBox.currentText() == "DFS":
-            start = time.time()
-            success, expanded_count, explored, parent_map = dfs(self.values_array)
-            end = time.time()
-            net_time = round((end - start), 6)
-            self.label_12.setText("Elapsed time: " + str(net_time) + "s")
-            self.label_13.setText("Nodes expanded: " + str(expanded_count))
-            cost, path, depth = get_path_depth(explored, parent_map)
-            self.path = path
-            self.label_14.setText("Search depth: " + str(depth))
-            if success:
-                self.label_15.setText("Path cost: " + str(cost))
-                print_path(path)
-                self.solvable_or_not.setText("This is a solvable problem")
-                self.solvable_or_not.setStyleSheet("background-color: lightGreen")
-            else:
-                self.solvable_or_not.setText("This is an unsolvable problem")
-                self.solvable_or_not.setStyleSheet("background-color: #FF6961")
+            if self.comboBox.currentText() == "DFS":
+                start = time.time()
+                success, expanded_count, explored, parent_map = dfs(self.values_array)
+                end = time.time()
+                net_time = round((end - start), 6)
+                self.label_12.setText("Elapsed time: " + str(net_time) + "s")
+                self.label_13.setText("Nodes expanded: " + str(expanded_count))
+                cost, path, depth = get_path_depth(explored, parent_map)
+                self.path = path
+                self.label_14.setText("Search depth: " + str(depth))
+                if success:
+                    self.label_15.setText("Path cost: " + str(cost))
+                    print_path(path)
+                    self.solvable_or_not.setText("This is a solvable problem")
+                    self.solvable_or_not.setStyleSheet("background-color: lightGreen")
+                else:
+                    self.solvable_or_not.setText("This is an unsolvable problem")
+                    self.solvable_or_not.setStyleSheet("background-color: #FF6961")
 
-        if self.comboBox.currentText() == "A* (manhattan)":
-            start = time.time()
-            success, expanded_count, explored, parent_map = a_star(
-                self.values_array, manhattan
-            )
-            end = time.time()
-            net_time = round((end - start), 6)
-            self.label_12.setText("Elapsed time: " + str(net_time) + "s")
-            self.label_13.setText("Nodes expanded: " + str(expanded_count))
-            cost, path, depth = get_path_depth(explored, parent_map)
-            self.path = path
-            self.label_14.setText("Search depth: " + str(depth))
-            if success:
-                self.label_15.setText("Path cost: " + str(cost))
-                print_path(path)
-                self.solvable_or_not.setText("This is a solvable problem")
-                self.solvable_or_not.setStyleSheet("background-color: lightGreen")
-            else:
-                self.solvable_or_not.setText("This is an unsolvable problem")
-                self.solvable_or_not.setStyleSheet("background-color: #FF6961")
+            if self.comboBox.currentText() == "A* (manhattan)":
+                start = time.time()
+                success, expanded_count, explored, parent_map = a_star(
+                    self.values_array, manhattan
+                )
+                end = time.time()
+                net_time = round((end - start), 6)
+                self.label_12.setText("Elapsed time: " + str(net_time) + "s")
+                self.label_13.setText("Nodes expanded: " + str(expanded_count))
+                cost, path, depth = get_path_depth(explored, parent_map)
+                self.path = path
+                self.label_14.setText("Search depth: " + str(depth))
+                if success:
+                    self.label_15.setText("Path cost: " + str(cost))
+                    print_path(path)
+                    self.solvable_or_not.setText("This is a solvable problem")
+                    self.solvable_or_not.setStyleSheet("background-color: lightGreen")
+                else:
+                    self.solvable_or_not.setText("This is an unsolvable problem")
+                    self.solvable_or_not.setStyleSheet("background-color: #FF6961")
 
-        if self.comboBox.currentText() == "A* (euclidean)":
-            start = time.time()
-            success, expanded_count, explored, parent_map = a_star(
-                self.values_array, euclidean
-            )
-            end = time.time()
-            net_time = round((end - start), 6)
-            self.label_12.setText("Elapsed time: " + str(net_time) + "s")
-            self.label_13.setText("Nodes expanded: " + str(expanded_count))
-            cost, path, depth = get_path_depth(explored, parent_map)
-            self.path = path
-            self.label_14.setText("Search depth: " + str(depth))
-            if success:
-                self.label_15.setText("Path cost: " + str(cost))
-                print_path(path)
-                self.solvable_or_not.setText("This is a solvable problem")
-                self.solvable_or_not.setStyleSheet("background-color: lightGreen")
-            else:
-                self.solvable_or_not.setText("This is an unsolvable problem")
-                self.solvable_or_not.setStyleSheet("background-color: #FF6961")
+            if self.comboBox.currentText() == "A* (euclidean)":
+                start = time.time()
+                success, expanded_count, explored, parent_map = a_star(
+                    self.values_array, euclidean
+                )
+                end = time.time()
+                net_time = round((end - start), 6)
+                self.label_12.setText("Elapsed time: " + str(net_time) + "s")
+                self.label_13.setText("Nodes expanded: " + str(expanded_count))
+                cost, path, depth = get_path_depth(explored, parent_map)
+                self.path = path
+                self.label_14.setText("Search depth: " + str(depth))
+                if success:
+                    self.label_15.setText("Path cost: " + str(cost))
+                    print_path(path)
+                    self.solvable_or_not.setText("This is a solvable problem")
+                    self.solvable_or_not.setStyleSheet("background-color: lightGreen")
+                else:
+                    self.solvable_or_not.setText("This is an unsolvable problem")
+                    self.solvable_or_not.setStyleSheet("background-color: #FF6961")
 
     def moves(self):
         length = len(self.path)

@@ -225,13 +225,17 @@ def get_path_depth(explored, parent_map):
 
 
 def print_path(path):
-    for state in reversed(path):
-        state = decompress(state)
+    if len(path) < 1000:
+        for state in reversed(path):
+            state = decompress(state)
+            print("-----")
+            for row in state:
+                for col in row:
+                    print(str(col), end=" ")
+                print()
         print("-----")
-        for row in state:
-            for col in row:
-                print(str(col), end=" ")
-            print()
+    else:
+        print("Path is longer than 1000. Won't print.")
 
 
 initial = [
