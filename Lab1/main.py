@@ -123,6 +123,7 @@ class Ui_MainWindow(object):
         )
         self.pushButton_2.setGeometry(QtCore.QRect(710, 90, 121, 41))
         self.pushButton_2.setObjectName("pushButton_2")
+        self.pushButton_2.setEnabled(False)
         self.label_12 = QtWidgets.QLabel(self.centralwidget)
         self.label_12.setGeometry(QtCore.QRect(550, 250, 261, 31))
         self.label_12.setObjectName("label_12")
@@ -310,6 +311,7 @@ class Ui_MainWindow(object):
                     print_path(path)
                     self.solvable_or_not.setText("This is a solvable problem")
                     self.solvable_or_not.setStyleSheet("background-color: lightGreen")
+                    self.pushButton_2.setEnabled(True)
                 else:
                     self.solvable_or_not.setText("This is an unsolvable problem")
                     self.solvable_or_not.setStyleSheet("background-color: #FF6961")
@@ -329,6 +331,7 @@ class Ui_MainWindow(object):
                     print_path(path)
                     self.solvable_or_not.setText("This is a solvable problem")
                     self.solvable_or_not.setStyleSheet("background-color: lightGreen")
+                    self.pushButton_2.setEnabled(True)
                 else:
                     self.solvable_or_not.setText("This is an unsolvable problem")
                     self.solvable_or_not.setStyleSheet("background-color: #FF6961")
@@ -350,6 +353,7 @@ class Ui_MainWindow(object):
                     print_path(path)
                     self.solvable_or_not.setText("This is a solvable problem")
                     self.solvable_or_not.setStyleSheet("background-color: lightGreen")
+                    self.pushButton_2.setEnabled(True)
                 else:
                     self.solvable_or_not.setText("This is an unsolvable problem")
                     self.solvable_or_not.setStyleSheet("background-color: #FF6961")
@@ -371,9 +375,11 @@ class Ui_MainWindow(object):
                     print_path(path)
                     self.solvable_or_not.setText("This is a solvable problem")
                     self.solvable_or_not.setStyleSheet("background-color: lightGreen")
+                    self.pushButton_2.setEnabled(True)
                 else:
                     self.solvable_or_not.setText("This is an unsolvable problem")
                     self.solvable_or_not.setStyleSheet("background-color: #FF6961")
+            self.pushButton.setEnabled(False)
 
     def moves(self):
         length = len(self.path)
@@ -443,7 +449,8 @@ class Ui_MainWindow(object):
             self.path.pop()
 
     def restore_button_view(self):
-        self.pushButton_2.setEnabled(True)
+        if len(self.path) > 1:
+            self.pushButton_2.setEnabled(True)
 
     def clear(self):
         self.values_array = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
@@ -470,6 +477,9 @@ class Ui_MainWindow(object):
         self.label_i.setGeometry(QtCore.QRect(350, 350, 170, 170))
         self.label_h.setGeometry(QtCore.QRect(180, 350, 170, 170))
         self.label_g.setGeometry(QtCore.QRect(10, 350, 170, 170))
+
+        self.pushButton.setEnabled(True)
+        self.pushButton_2.setEnabled(False)
 
 
 if __name__ == "__main__":
