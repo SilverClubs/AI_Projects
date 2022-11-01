@@ -398,6 +398,8 @@ class Ui_MainWindow(object):
                 else:
                     self.solvable_or_not.setText("This is an unsolvable problem")
                     self.solvable_or_not.setStyleSheet("background-color: #FF6961")
+
+            self.pushButton.clearFocus()
             self.pushButton.setEnabled(False)
 
     def moves(self):
@@ -421,6 +423,7 @@ class Ui_MainWindow(object):
                 self.animation.setEndValue(temp_lab2.pos() + QPoint(0, -170))
                 self.animation.finished.connect(self.restore_button_view)
                 self.animation.start()
+                self.pushButton_2.clearFocus()
                 self.pushButton_2.setEnabled(False)
 
             elif i2 < i1:
@@ -434,6 +437,7 @@ class Ui_MainWindow(object):
                 self.animation.setEndValue(temp_lab2.pos() + QPoint(0, 170))
                 self.animation.finished.connect(self.restore_button_view)
                 self.animation.start()
+                self.pushButton_2.clearFocus()
                 self.pushButton_2.setEnabled(False)
 
             elif j2 > j1:
@@ -447,6 +451,7 @@ class Ui_MainWindow(object):
                 self.animation.setEndValue(temp_lab2.pos() + QPoint(-170, 0))
                 self.animation.finished.connect(self.restore_button_view)
                 self.animation.start()
+                self.pushButton_2.clearFocus()
                 self.pushButton_2.setEnabled(False)
 
             elif j2 < j1:
@@ -460,6 +465,7 @@ class Ui_MainWindow(object):
                 self.animation.setEndValue(temp_lab2.pos() + QPoint(170, 0))
                 self.animation.finished.connect(self.restore_button_view)
                 self.animation.start()
+                self.pushButton_2.clearFocus()
                 self.pushButton_2.setEnabled(False)
 
             swap_lab = self.label_array[i1][j1]
