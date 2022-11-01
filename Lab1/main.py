@@ -1,10 +1,9 @@
 import time
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtCore import pyqtSignal
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QLabel
-from PyQt5.QtCore import Qt, QPoint
+from PyQt5.QtCore import Qt, QPoint, QEasingCurve, pyqtSignal, QPropertyAnimation
 from algos import *
 import math
 
@@ -308,6 +307,7 @@ class Ui_MainWindow(object):
             self.label_14.setText("Search depth: " + str(depth))
             if success:
                 self.label_15.setText("Path cost: " + str(cost))
+                print_path(path)
                 self.solvable_or_not.setText("This is a solvable problem")
                 self.solvable_or_not.setStyleSheet("background-color: lightGreen")
             else:
@@ -326,6 +326,7 @@ class Ui_MainWindow(object):
             self.label_14.setText("Search depth: " + str(depth))
             if success:
                 self.label_15.setText("Path cost: " + str(cost))
+                print_path(path)
                 self.solvable_or_not.setText("This is a solvable problem")
                 self.solvable_or_not.setStyleSheet("background-color: lightGreen")
             else:
@@ -346,6 +347,7 @@ class Ui_MainWindow(object):
             self.label_14.setText("Search depth: " + str(depth))
             if success:
                 self.label_15.setText("Path cost: " + str(cost))
+                print_path(path)
                 self.solvable_or_not.setText("This is a solvable problem")
                 self.solvable_or_not.setStyleSheet("background-color: lightGreen")
             else:
@@ -366,6 +368,7 @@ class Ui_MainWindow(object):
             self.label_14.setText("Search depth: " + str(depth))
             if success:
                 self.label_15.setText("Path cost: " + str(cost))
+                print_path(path)
                 self.solvable_or_not.setText("This is a solvable problem")
                 self.solvable_or_not.setStyleSheet("background-color: lightGreen")
             else:
@@ -373,46 +376,74 @@ class Ui_MainWindow(object):
                 self.solvable_or_not.setStyleSheet("background-color: #FF6961")
 
     def moves(self):
-        def moves(self):
-            print(self.path)
-
         length = len(self.path)
-        temp1 = self.path[length - 1]
-        temp2 = self.path[length - 2]
-        temp_arr1 = decompress(temp1)
-        temp_arr2 = decompress(temp2)
-        i1, j1 = get_row_col(0, temp_arr1)  # i is row, j is column
-        i2, j2 = get_row_col(0, temp_arr2)
-        if i2 > i1:
-            # move right
-            temp_lab1 = self.label_array[i1][j1]
-            temp_lab2 = self.label_array[i2][j2]
-            temp_lab1.move(temp_lab1.pos() + QPoint(0, 170))
-            temp_lab2.move(temp_lab2.pos() + QPoint(0, -170))
 
-        elif i2 < i1:
-            # move left
-            temp_lab1 = self.label_array[i1][j1]
-            temp_lab2 = self.label_array[i2][j2]
-            temp_lab1.move(temp_lab1.pos() + QPoint(0, -170))
-            temp_lab2.move(temp_lab2.pos() + QPoint(0, 170))
+        if length:
+            temp1 = self.path[length - 1]
+            temp2 = self.path[length - 2]
+            temp_arr1 = decompress(temp1)
+            temp_arr2 = decompress(temp2)
+            i1, j1 = get_row_col(0, temp_arr1)  # i is row, j is column
+            i2, j2 = get_row_col(0, temp_arr2)
+            if i2 > i1:
+                temp_lab1 = self.label_array[i1][j1]
+                temp_lab2 = self.label_array[i2][j2]
+                temp_lab1.move(temp_lab1.pos() + QPoint(0, 170))
 
-        elif j2 > j1:
-            temp_lab1 = self.label_array[i1][j1]
-            temp_lab2 = self.label_array[i2][j2]
-            temp_lab1.move(temp_lab1.pos() + QPoint(170, 0))
-            temp_lab2.move(temp_lab2.pos() + QPoint(-170, 0))
+                self.animation = QPropertyAnimation(temp_lab2, b"pos")
+                self.animation.setEasingCurve(QEasingCurve.InOutCubic)
+                self.animation.setDuration(100)
+                self.animation.setEndValue(temp_lab2.pos() + QPoint(0, -170))
+                self.animation.finished.connect(self.restore_button_view)
+                self.animation.start()
+                self.pushButton_2.setEnabled(False)
 
-        elif j2 < j1:
-            temp_lab1 = self.label_array[i1][j1]
-            temp_lab2 = self.label_array[i2][j2]
-            temp_lab1.move(temp_lab1.pos() + QPoint(-170, 0))
-            temp_lab2.move(temp_lab2.pos() + QPoint(170, 0))
+            elif i2 < i1:
+                temp_lab1 = self.label_array[i1][j1]
+                temp_lab2 = self.label_array[i2][j2]
+                temp_lab1.move(temp_lab1.pos() + QPoint(0, -170))
 
-        swap_lab = self.label_array[i1][j1]
-        self.label_array[i1][j1] = self.label_array[i2][j2]
-        self.label_array[i2][j2] = swap_lab
-        self.path.pop()
+                self.animation = QPropertyAnimation(temp_lab2, b"pos")
+                self.animation.setEasingCurve(QEasingCurve.InOutCubic)
+                self.animation.setDuration(100)
+                self.animation.setEndValue(temp_lab2.pos() + QPoint(0, 170))
+                self.animation.finished.connect(self.restore_button_view)
+                self.animation.start()
+                self.pushButton_2.setEnabled(False)
+
+            elif j2 > j1:
+                temp_lab1 = self.label_array[i1][j1]
+                temp_lab2 = self.label_array[i2][j2]
+                temp_lab1.move(temp_lab1.pos() + QPoint(170, 0))
+
+                self.animation = QPropertyAnimation(temp_lab2, b"pos")
+                self.animation.setEasingCurve(QEasingCurve.InOutCubic)
+                self.animation.setDuration(100)
+                self.animation.setEndValue(temp_lab2.pos() + QPoint(-170, 0))
+                self.animation.finished.connect(self.restore_button_view)
+                self.animation.start()
+                self.pushButton_2.setEnabled(False)
+
+            elif j2 < j1:
+                temp_lab1 = self.label_array[i1][j1]
+                temp_lab2 = self.label_array[i2][j2]
+                temp_lab1.move(temp_lab1.pos() + QPoint(-170, 0))
+
+                self.animation = QPropertyAnimation(temp_lab2, b"pos")
+                self.animation.setEasingCurve(QEasingCurve.InOutCubic)
+                self.animation.setDuration(100)
+                self.animation.setEndValue(temp_lab2.pos() + QPoint(170, 0))
+                self.animation.finished.connect(self.restore_button_view)
+                self.animation.start()
+                self.pushButton_2.setEnabled(False)
+
+            swap_lab = self.label_array[i1][j1]
+            self.label_array[i1][j1] = self.label_array[i2][j2]
+            self.label_array[i2][j2] = swap_lab
+            self.path.pop()
+
+    def restore_button_view(self):
+        self.pushButton_2.setEnabled(True)
 
     def clear(self):
         self.values_array = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
@@ -429,6 +460,7 @@ class Ui_MainWindow(object):
         self.label_15.setText("")
         self.solvable_or_not.setText("")
         self.solvable_or_not.setStyleSheet("")
+        self.path = []
 
 
 if __name__ == "__main__":

@@ -224,6 +224,16 @@ def get_path_depth(explored, parent_map):
     return (len(path) - 1, path, max_depth)
 
 
+def print_path(path):
+    for state in reversed(path):
+        state = decompress(state)
+        print("-----")
+        for row in state:
+            for col in row:
+                print(str(col), end=" ")
+            print()
+
+
 initial = [
     [1, 2, 5],
     [3, 4, 8],
@@ -242,10 +252,17 @@ test = [
     [7, 6, 5],
 ]
 
+test2 = [
+    [8, 1, 7],
+    [4, 5, 2],
+    [3, 0, 6],
+]
+
+
 if __name__ == "__main__":
 
     start = time.time()
-    success, expanded_count, explored, parent_map = a_star(unsolvable_state, euclidean)
+    success, expanded_count, explored, parent_map = a_star(test2, manhattan)
     end = time.time()
     print(f"Elapsed time: {end-start} seconds")
     print(f"Nodes expanded: {expanded_count}")
@@ -254,5 +271,6 @@ if __name__ == "__main__":
     if success:
         print(f"Path found. Cost: {cost}.")
         print(f"Path: {path}")
+        print_path(path)
     else:
         print(f"Path not found.")
