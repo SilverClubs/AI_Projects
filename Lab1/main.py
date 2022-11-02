@@ -24,7 +24,6 @@ class Ui_MainWindow(object):
         self.counter = 0
         self.label_array = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
         self.values_array = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
-        self.flag = 0
 
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(848, 531)
@@ -168,15 +167,14 @@ class Ui_MainWindow(object):
         self.label_h.setText(_translate("MainWindow", ""))
         self.label_g.setText(_translate("MainWindow", ""))
         self.label_11.setText(_translate("MainWindow", "Choose solving algorithm:"))
-        self.solvable_or_not.setText(_translate("MainWindow", ""))
         self.pushButton.setText(_translate("MainWindow", "Start"))
         self.pushButton_2.setText(_translate("MainWindow", "View"))
+        self.pushButton_3.setText(_translate("MainWindow", "Reset"))
+        self.solvable_or_not.setText(_translate("MainWindow", ""))
         self.label_12.setText(_translate("MainWindow", ""))
         self.label_13.setText(_translate("MainWindow", ""))
         self.label_14.setText(_translate("MainWindow", ""))
-        self.pushButton_3.setText(_translate("MainWindow", "Reset"))
         self.label_15.setText(_translate("MainWindow", ""))
-        self.pushButton_3.setText(_translate("MainWindow", "Reset"))
 
     def edita(self):
         var = self.label_a
@@ -186,6 +184,7 @@ class Ui_MainWindow(object):
             if self.counter == 0:
                 self.label_a.setText("")
                 self.label_a.setStyleSheet("")
+                self.label_a.lower()
             else:
                 self.label_a.setText(str(self.counter))
                 self.label_a.setStyleSheet("background-color: gray")
@@ -201,6 +200,7 @@ class Ui_MainWindow(object):
             if self.counter == 0:
                 self.label_b.setText("")
                 self.label_b.setStyleSheet("")
+                self.label_b.lower()
             else:
                 self.label_b.setText(str(self.counter))
                 self.label_b.setStyleSheet("background-color: gray")
@@ -216,6 +216,7 @@ class Ui_MainWindow(object):
             if self.counter == 0:
                 self.label_c.setText("")
                 self.label_c.setStyleSheet("")
+                self.label_c.lower()
             else:
                 self.label_c.setText(str(self.counter))
                 self.label_c.setStyleSheet("background-color: gray")
@@ -231,6 +232,7 @@ class Ui_MainWindow(object):
             if self.counter == 0:
                 self.label_d.setText("")
                 self.label_d.setStyleSheet("")
+                self.label_d.lower()
             else:
                 self.label_d.setText(str(self.counter))
                 self.label_d.setStyleSheet("background-color: gray")
@@ -246,6 +248,7 @@ class Ui_MainWindow(object):
             if self.counter == 0:
                 self.label_e.setText("")
                 self.label_e.setStyleSheet("")
+                self.label_e.lower()
             else:
                 self.label_e.setText(str(self.counter))
                 self.label_e.setStyleSheet("background-color: gray")
@@ -261,6 +264,7 @@ class Ui_MainWindow(object):
             if self.counter == 0:
                 self.label_f.setText("")
                 self.label_f.setStyleSheet("")
+                self.label_f.lower()
             else:
                 self.label_f.setText(str(self.counter))
                 self.label_f.setStyleSheet("background-color: gray")
@@ -276,6 +280,7 @@ class Ui_MainWindow(object):
             if self.counter == 0:
                 self.label_g.setText("")
                 self.label_g.setStyleSheet("")
+                self.label_g.lower()
             else:
                 self.label_g.setText(str(self.counter))
                 self.label_g.setStyleSheet("background-color: gray")
@@ -291,6 +296,7 @@ class Ui_MainWindow(object):
             if self.counter == 0:
                 self.label_h.setText("")
                 self.label_h.setStyleSheet("")
+                self.label_h.lower()
             else:
                 self.label_h.setText(str(self.counter))
                 self.label_h.setStyleSheet("background-color: gray")
@@ -306,6 +312,7 @@ class Ui_MainWindow(object):
             if self.counter == 0:
                 self.label_i.setText("")
                 self.label_i.setStyleSheet("")
+                self.label_i.lower()
             else:
                 self.label_i.setText(str(self.counter))
                 self.label_i.setStyleSheet("background-color: gray")
@@ -404,6 +411,8 @@ class Ui_MainWindow(object):
 
     def moves(self):
         length = len(self.path)
+        easing_curve = QEasingCurve.OutExpo
+        duration = 150
 
         if length:
             temp1 = self.path[length - 1]
@@ -418,8 +427,8 @@ class Ui_MainWindow(object):
                 temp_lab1.move(temp_lab1.pos() + QPoint(0, 170))
 
                 self.animation = QPropertyAnimation(temp_lab2, b"pos")
-                self.animation.setEasingCurve(QEasingCurve.InOutCubic)
-                self.animation.setDuration(100)
+                self.animation.setEasingCurve(easing_curve)
+                self.animation.setDuration(duration)
                 self.animation.setEndValue(temp_lab2.pos() + QPoint(0, -170))
                 self.animation.finished.connect(self.restore_button_view)
                 self.animation.start()
@@ -432,8 +441,8 @@ class Ui_MainWindow(object):
                 temp_lab1.move(temp_lab1.pos() + QPoint(0, -170))
 
                 self.animation = QPropertyAnimation(temp_lab2, b"pos")
-                self.animation.setEasingCurve(QEasingCurve.InOutCubic)
-                self.animation.setDuration(100)
+                self.animation.setEasingCurve(easing_curve)
+                self.animation.setDuration(duration)
                 self.animation.setEndValue(temp_lab2.pos() + QPoint(0, 170))
                 self.animation.finished.connect(self.restore_button_view)
                 self.animation.start()
@@ -446,8 +455,8 @@ class Ui_MainWindow(object):
                 temp_lab1.move(temp_lab1.pos() + QPoint(170, 0))
 
                 self.animation = QPropertyAnimation(temp_lab2, b"pos")
-                self.animation.setEasingCurve(QEasingCurve.InOutCubic)
-                self.animation.setDuration(100)
+                self.animation.setEasingCurve(easing_curve)
+                self.animation.setDuration(duration)
                 self.animation.setEndValue(temp_lab2.pos() + QPoint(-170, 0))
                 self.animation.finished.connect(self.restore_button_view)
                 self.animation.start()
@@ -460,8 +469,8 @@ class Ui_MainWindow(object):
                 temp_lab1.move(temp_lab1.pos() + QPoint(-170, 0))
 
                 self.animation = QPropertyAnimation(temp_lab2, b"pos")
-                self.animation.setEasingCurve(QEasingCurve.InOutCubic)
-                self.animation.setDuration(100)
+                self.animation.setEasingCurve(easing_curve)
+                self.animation.setDuration(duration)
                 self.animation.setEndValue(temp_lab2.pos() + QPoint(170, 0))
                 self.animation.finished.connect(self.restore_button_view)
                 self.animation.start()
@@ -484,6 +493,7 @@ class Ui_MainWindow(object):
                 if label != 0:
                     label.setText("")
                     label.setStyleSheet("")
+                    label.raise_()
         self.label_array = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
         self.counter = 0
         self.label_12.setText("")
@@ -503,6 +513,7 @@ class Ui_MainWindow(object):
         self.label_h.setGeometry(QtCore.QRect(180, 350, 170, 170))
         self.label_g.setGeometry(QtCore.QRect(10, 350, 170, 170))
 
+        self.pushButton.setEnabled(False)
         self.pushButton_2.setEnabled(False)
 
 
