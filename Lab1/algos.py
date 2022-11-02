@@ -11,7 +11,7 @@ goal = [
 ]
 
 
-def compress(arr):  # ugly but fast
+def compress(arr):  # turn 2D 3x3 array into int
     return (
         arr[2][2]
         + arr[2][1] * 10
@@ -25,7 +25,7 @@ def compress(arr):  # ugly but fast
     )
 
 
-def decompress(num):
+def decompress(num):  # turn int into 2D 3x3 array
     arr = [
         [0, 0, 0],
         [0, 0, 0],
@@ -39,7 +39,7 @@ def decompress(num):
     return arr
 
 
-def get_row_col(key, arr):
+def get_row_col(key, arr):  # return (row, col) of key
     for row in range(3):
         for col in range(3):
             if key == arr[row][col]:
@@ -47,7 +47,7 @@ def get_row_col(key, arr):
     return -1
 
 
-def manhattan(cur_state):
+def manhattan(cur_state):  # calculate manhattan distance from cur_state to goal
     total = 0
     for row in range(3):
         for col in range(3):
@@ -58,7 +58,7 @@ def manhattan(cur_state):
     return total
 
 
-def euclidean(cur_state):
+def euclidean(cur_state):  # calculate euclidean distance from cur_state to goal
     total = 0
     for row in range(3):
         for col in range(3):
@@ -69,11 +69,11 @@ def euclidean(cur_state):
     return total
 
 
-def goal_check(cur_state):
+def goal_check(cur_state):  # check if cur_state is goal state
     return cur_state == goal
 
 
-def expand(cur_state):  # returns compressed states
+def expand(cur_state):  # returns neighbors of current state as integers
     states = []
     row, col = get_row_col(0, cur_state)
     if row > 0:  # move up
@@ -153,7 +153,7 @@ def dfs(initial_state):
     return (False, expanded_count, explored, parent_map)
 
 
-def a_star(initial_state, heuristic):
+def a_star(initial_state, heuristic):  # takes heuristic function as parameter
     parent_map = {}
     parent_map[compress(initial_state)] = compress(initial_state)
     frontier = []
@@ -165,6 +165,10 @@ def a_star(initial_state, heuristic):
 
     while len(frontier):
         state = heappop(frontier)
+        """
+        check if state is not in explored, to avoid going over a state more than
+        once (due to its cost being decreased and entering the frontier again)
+        """
         if state[1] not in explored:
             h = heuristic(decompress(state[1]))
             g = state[0] - h
@@ -188,10 +192,11 @@ def a_star(initial_state, heuristic):
     return (False, expanded_count, explored, parent_map)
 
 
-def get_path_depth(explored, parent_map):
+def get_path_depth(explored, parent_map):  # returns path cost, path, max search depth
     path = []
     node = compress(goal)
     if node in parent_map:
+        # if goal is in parent_map, start appending the nodes to the path list
         parent = parent_map[node]
         while node != parent:
             path.append(node)
@@ -199,7 +204,7 @@ def get_path_depth(explored, parent_map):
             parent = parent_map[node]
         path.append(node)
 
-    cost_map = {}
+    cost_map = {}  # cost map will hold the cost to each node
     for node in parent_map:
         parent = parent_map[node]
         tmp = [node]
@@ -217,8 +222,9 @@ def get_path_depth(explored, parent_map):
                 break
             cost_map[node] = cost
             cost -= 1
+
     max_depth = 0
-    for node in explored:
+    for node in explored:  # maximum depth is the node with maximum cost in explored
         max_depth = max(max_depth, cost_map[node])
 
     return (len(path) - 1, path, max_depth)
@@ -238,19 +244,14 @@ def print_path(path):
         print("Path is longer than 1000. Won't print.")
 
 
-initial = [
+test1 = [
     [1, 2, 5],
     [3, 4, 8],
     [6, 7, 0],
 ]
 
-unsolvable_state = [
-    [8, 1, 2],
-    [0, 4, 3],
-    [7, 6, 5],
-]
 
-test = [
+test2 = [
     [1, 8, 2],
     [0, 4, 3],
     [7, 6, 5],
@@ -262,9 +263,14 @@ test2 = [
     [3, 0, 6],
 ]
 
+unsolvable_state = [
+    [8, 1, 2],
+    [0, 4, 3],
+    [7, 6, 5],
+]
+
 
 if __name__ == "__main__":
-
     start = time.time()
     success, expanded_count, explored, parent_map = a_star(test2, manhattan)
     end = time.time()
