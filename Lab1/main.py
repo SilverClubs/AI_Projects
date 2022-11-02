@@ -5,7 +5,6 @@ from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QLabel
 from PyQt5.QtCore import QPoint, QEasingCurve, pyqtSignal, QPropertyAnimation
 from algos import *
-import math
 
 
 class Label(QLabel):
