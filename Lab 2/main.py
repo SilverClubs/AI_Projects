@@ -8,6 +8,7 @@ from PyQt5 import QtCore
 from PyQt5 import QtGui
 import sys
 
+
 class Label(QLabel):
     clicked = pyqtSignal()
 
@@ -451,21 +452,25 @@ class Ui_ConnectFour(object):
         self.y72.setPixmap(QtGui.QPixmap("connect-4-puck-yellow.png"))
         self.y72.setObjectName("y72")
 
-        self.redPucks = [[self.r11, self.r12, self.r13, self.r14, self.r15, self.r16],
-                         [self.r21, self.r22, self.r23, self.r24, self.r25, self.r26],
-                         [self.r31, self.r32, self.r33, self.r34, self.r35, self.r36],
-                         [self.r41, self.r42, self.r43, self.r44, self.r45, self.r46],
-                         [self.r51, self.r52, self.r53, self.r54, self.r55, self.r56],
-                         [self.r61, self.r62, self.r63, self.r64, self.r65, self.r66],
-                         [self.r71, self.r72, self.r73, self.r74, self.r75, self.r76]]
+        self.redPucks = [
+            [self.r11, self.r12, self.r13, self.r14, self.r15, self.r16],
+            [self.r21, self.r22, self.r23, self.r24, self.r25, self.r26],
+            [self.r31, self.r32, self.r33, self.r34, self.r35, self.r36],
+            [self.r41, self.r42, self.r43, self.r44, self.r45, self.r46],
+            [self.r51, self.r52, self.r53, self.r54, self.r55, self.r56],
+            [self.r61, self.r62, self.r63, self.r64, self.r65, self.r66],
+            [self.r71, self.r72, self.r73, self.r74, self.r75, self.r76],
+        ]
 
-        self.yellowPucks = [[self.y11, self.y12, self.y13, self.y14, self.y15, self.y16],
-                            [self.y21, self.y22, self.y23, self.y24, self.y25, self.y26],
-                            [self.y31, self.y32, self.y33, self.y34, self.y35, self.y36],
-                            [self.y41, self.y42, self.y43, self.y44, self.y45, self.y46],
-                            [self.y51, self.y52, self.y53, self.y54, self.y55, self.y56],
-                            [self.y61, self.y62, self.y63, self.y64, self.y65, self.y66],
-                            [self.y71, self.y72, self.y73, self.y74, self.y75, self.y76]]
+        self.yellowPucks = [
+            [self.y11, self.y12, self.y13, self.y14, self.y15, self.y16],
+            [self.y21, self.y22, self.y23, self.y24, self.y25, self.y26],
+            [self.y31, self.y32, self.y33, self.y34, self.y35, self.y36],
+            [self.y41, self.y42, self.y43, self.y44, self.y45, self.y46],
+            [self.y51, self.y52, self.y53, self.y54, self.y55, self.y56],
+            [self.y61, self.y62, self.y63, self.y64, self.y65, self.y66],
+            [self.y71, self.y72, self.y73, self.y74, self.y75, self.y76],
+        ]
 
         self.columnCount = [0, 0, 0, 0, 0, 0, 0]
 
@@ -522,20 +527,14 @@ class Ui_ConnectFour(object):
         self.c1.setText("")
         self.c1.setObjectName("c1")
         self.c1.clicked.connect(self.add1)
-        self.c1.setStyleSheet("QLabel::hover"
-                              "{"
-                              "border: 6px solid black;"
-                              "}")
+        self.c1.setStyleSheet("QLabel::hover" "{" "border: 6px solid black;" "}")
         self.c2 = Label(self.centralwidget)
         self.c2.setGeometry(QtCore.QRect(140, 130, 131, 781))
         self.c2.setMouseTracking(False)
         self.c2.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.c2.setText("")
         self.c2.setObjectName("c2")
-        self.c2.setStyleSheet("QLabel::hover"
-                              "{"
-                              "border: 6px solid black;"
-                              "}")
+        self.c2.setStyleSheet("QLabel::hover" "{" "border: 6px solid black;" "}")
         self.c2.clicked.connect(self.add2)
         self.c3 = Label(self.centralwidget)
         self.c3.setGeometry(QtCore.QRect(270, 130, 131, 781))
@@ -543,10 +542,7 @@ class Ui_ConnectFour(object):
         self.c3.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.c3.setText("")
         self.c3.setObjectName("c3")
-        self.c3.setStyleSheet("QLabel::hover"
-                              "{"
-                              "border: 6px solid black;"
-                              "}")
+        self.c3.setStyleSheet("QLabel::hover" "{" "border: 6px solid black;" "}")
         self.c3.clicked.connect(self.add3)
         self.c4 = Label(self.centralwidget)
         self.c4.setGeometry(QtCore.QRect(400, 130, 131, 781))
@@ -554,10 +550,7 @@ class Ui_ConnectFour(object):
         self.c4.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.c4.setText("")
         self.c4.setObjectName("c4")
-        self.c4.setStyleSheet("QLabel::hover"
-                              "{"
-                              "border: 6px solid black;"
-                              "}")
+        self.c4.setStyleSheet("QLabel::hover" "{" "border: 6px solid black;" "}")
         self.c4.clicked.connect(self.add4)
         self.c5 = Label(self.centralwidget)
         self.c5.setGeometry(QtCore.QRect(530, 130, 131, 781))
@@ -565,10 +558,7 @@ class Ui_ConnectFour(object):
         self.c5.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.c5.setText("")
         self.c5.setObjectName("c5")
-        self.c5.setStyleSheet("QLabel::hover"
-                              "{"
-                              "border: 6px solid black;"
-                              "}")
+        self.c5.setStyleSheet("QLabel::hover" "{" "border: 6px solid black;" "}")
         self.c5.clicked.connect(self.add5)
         self.c6 = Label(self.centralwidget)
         self.c6.setGeometry(QtCore.QRect(660, 130, 131, 781))
@@ -576,10 +566,7 @@ class Ui_ConnectFour(object):
         self.c6.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.c6.setText("")
         self.c6.setObjectName("c6")
-        self.c6.setStyleSheet("QLabel::hover"
-                              "{"
-                              "border: 6px solid black;"
-                              "}")
+        self.c6.setStyleSheet("QLabel::hover" "{" "border: 6px solid black;" "}")
         self.c6.clicked.connect(self.add6)
         self.c7 = Label(self.centralwidget)
         self.c7.setGeometry(QtCore.QRect(790, 130, 131, 781))
@@ -588,104 +575,43 @@ class Ui_ConnectFour(object):
         self.c7.setFrameShadow(QtWidgets.QFrame.Plain)
         self.c7.setText("")
         self.c7.setObjectName("c7")
-        self.c7.setStyleSheet("QLabel::hover"
-                              "{"
-                              "border: 6px solid black;"
-                              "}")
+        self.c7.setStyleSheet("QLabel::hover" "{" "border: 6px solid black;" "}")
         self.c7.clicked.connect(self.add7)
 
-        self.confirmMove = QtWidgets.QPushButton(self.centralwidget, clicked=lambda: self.call())
+        self.confirmMove = QtWidgets.QPushButton(
+            self.centralwidget, clicked=lambda: self.call()
+        )
         self.confirmMove.setGeometry(QtCore.QRect(950, 850, 110, 41))
         self.confirmMove.setObjectName("confirmMove")
 
-        self.removeMove = QtWidgets.QPushButton(self.centralwidget, clicked=lambda: self.reset())
+        self.removeMove = QtWidgets.QPushButton(
+            self.centralwidget, clicked=lambda: self.reset()
+        )
         self.removeMove.setGeometry(QtCore.QRect(1120, 850, 110, 41))
         self.removeMove.setObjectName("removeMove")
 
-        self.r11.raise_()
-        self.r12.raise_()
-        self.r13.raise_()
-        self.r14.raise_()
-        self.r15.raise_()
-        self.r16.raise_()
-        self.r23.raise_()
-        self.r25.raise_()
-        self.r26.raise_()
-        self.r22.raise_()
-        self.r21.raise_()
-        self.r24.raise_()
-        self.r35.raise_()
-        self.r31.raise_()
-        self.r33.raise_()
-        self.r36.raise_()
-        self.r32.raise_()
-        self.r34.raise_()
-        self.r42.raise_()
-        self.r46.raise_()
-        self.r44.raise_()
-        self.r45.raise_()
-        self.r43.raise_()
-        self.r41.raise_()
-        self.r52.raise_()
-        self.r56.raise_()
-        self.r54.raise_()
-        self.r55.raise_()
-        self.r53.raise_()
-        self.r51.raise_()
-        self.r62.raise_()
-        self.r66.raise_()
-        self.r64.raise_()
-        self.r65.raise_()
-        self.r63.raise_()
-        self.r61.raise_()
-        self.r73.raise_()
-        self.r76.raise_()
-        self.r75.raise_()
-        self.r72.raise_()
-        self.r74.raise_()
-        self.r71.raise_()
-        self.y11.raise_()
-        self.y12.raise_()
-        self.y13.raise_()
-        self.y14.raise_()
-        self.y15.raise_()
-        self.y16.raise_()
-        self.y23.raise_()
-        self.y24.raise_()
-        self.y22.raise_()
-        self.y26.raise_()
-        self.y21.raise_()
-        self.y25.raise_()
-        self.y33.raise_()
-        self.y34.raise_()
-        self.y32.raise_()
-        self.y36.raise_()
-        self.y31.raise_()
-        self.y35.raise_()
-        self.y41.raise_()
-        self.y45.raise_()
-        self.y44.raise_()
-        self.y43.raise_()
-        self.y46.raise_()
-        self.y42.raise_()
-        self.y51.raise_()
-        self.y55.raise_()
-        self.y54.raise_()
-        self.y53.raise_()
-        self.y56.raise_()
-        self.y52.raise_()
-        self.y61.raise_()
-        self.y65.raise_()
-        self.y64.raise_()
-        self.y63.raise_()
-        self.y66.raise_()
-        self.y62.raise_()
-        self.y71.raise_()
-        self.y75.raise_()
-        self.y74.raise_()
-        self.y73.raise_()
-        self.y76.raise_()
-        self.y72.raise_()
+        for i in range(11, 17):
+            exec(f"self.r{i}.raise_()")
+            exec(f"self.y{i}.raise_()")
+        for i in range(21, 27):
+            exec(f"self.r{i}.raise_()")
+            exec(f"self.y{i}.raise_()")
+        for i in range(31, 37):
+            exec(f"self.r{i}.raise_()")
+            exec(f"self.y{i}.raise_()")
+        for i in range(41, 47):
+            exec(f"self.r{i}.raise_()")
+            exec(f"self.y{i}.raise_()")
+        for i in range(51, 57):
+            exec(f"self.r{i}.raise_()")
+            exec(f"self.y{i}.raise_()")
+        for i in range(61, 67):
+            exec(f"self.r{i}.raise_()")
+            exec(f"self.y{i}.raise_()")
+        for i in range(71, 77):
+            exec(f"self.r{i}.raise_()")
+            exec(f"self.y{i}.raise_()")
+
         self.board.raise_()
         self.groupBox.raise_()
         self.announceWinner.raise_()
@@ -726,8 +652,6 @@ class Ui_ConnectFour(object):
         self.player1Score.setText(_translate("ConnectFour", "TextLabel"))
         self.comScore.setText(_translate("ConnectFour", "TextLabel"))
 
-
-
     def add1(self):
         if self.columnCount[0] == 6:
             self.announceWinner.setText(" No more pucks can be added here!!")
@@ -746,11 +670,10 @@ class Ui_ConnectFour(object):
             self.animation = QPropertyAnimation(lbl, b"pos")
             self.animation.setEasingCurve(easing_curve)
             self.animation.setDuration(duration)
-            self.animation.setEndValue(lbl.pos() + QPoint(0, 130*(6-i)))
+            self.animation.setEndValue(lbl.pos() + QPoint(0, 130 * (6 - i)))
             self.animation.start()
             self.columnCount[0] = self.columnCount[0] + 1
             self.turn = 0
-
 
     def add2(self):
         if self.columnCount[1] == 6:
@@ -770,7 +693,7 @@ class Ui_ConnectFour(object):
             self.animation = QPropertyAnimation(lbl, b"pos")
             self.animation.setEasingCurve(easing_curve)
             self.animation.setDuration(duration)
-            self.animation.setEndValue(lbl.pos() + QPoint(0, 130*(6-i)))
+            self.animation.setEndValue(lbl.pos() + QPoint(0, 130 * (6 - i)))
             self.animation.start()
             self.columnCount[1] = self.columnCount[1] + 1
             self.turn = 0
@@ -793,7 +716,7 @@ class Ui_ConnectFour(object):
             self.animation = QPropertyAnimation(lbl, b"pos")
             self.animation.setEasingCurve(easing_curve)
             self.animation.setDuration(duration)
-            self.animation.setEndValue(lbl.pos() + QPoint(0, 130*(6-i)))
+            self.animation.setEndValue(lbl.pos() + QPoint(0, 130 * (6 - i)))
             self.animation.start()
             self.columnCount[2] = self.columnCount[2] + 1
             self.turn = 0
@@ -816,7 +739,7 @@ class Ui_ConnectFour(object):
             self.animation = QPropertyAnimation(lbl, b"pos")
             self.animation.setEasingCurve(easing_curve)
             self.animation.setDuration(duration)
-            self.animation.setEndValue(lbl.pos() + QPoint(0, 130*(6-i)))
+            self.animation.setEndValue(lbl.pos() + QPoint(0, 130 * (6 - i)))
             self.animation.start()
             self.columnCount[3] = self.columnCount[3] + 1
             self.turn = 0
@@ -839,7 +762,7 @@ class Ui_ConnectFour(object):
             self.animation = QPropertyAnimation(lbl, b"pos")
             self.animation.setEasingCurve(easing_curve)
             self.animation.setDuration(duration)
-            self.animation.setEndValue(lbl.pos() + QPoint(0, 130*(6-i)))
+            self.animation.setEndValue(lbl.pos() + QPoint(0, 130 * (6 - i)))
             self.animation.start()
             self.columnCount[4] = self.columnCount[4] + 1
             self.turn = 0
@@ -862,7 +785,7 @@ class Ui_ConnectFour(object):
             self.animation = QPropertyAnimation(lbl, b"pos")
             self.animation.setEasingCurve(easing_curve)
             self.animation.setDuration(duration)
-            self.animation.setEndValue(lbl.pos() + QPoint(0, 130*(6-i)))
+            self.animation.setEndValue(lbl.pos() + QPoint(0, 130 * (6 - i)))
             self.animation.start()
             self.columnCount[5] = self.columnCount[5] + 1
             self.turn = 0
@@ -885,20 +808,18 @@ class Ui_ConnectFour(object):
             self.animation = QPropertyAnimation(lbl, b"pos")
             self.animation.setEasingCurve(easing_curve)
             self.animation.setDuration(duration)
-            self.animation.setEndValue(lbl.pos() + QPoint(0, 130*(6-i)))
+            self.animation.setEndValue(lbl.pos() + QPoint(0, 130 * (6 - i)))
             self.animation.start()
             self.columnCount[6] = self.columnCount[6] + 1
             self.turn = 0
 
-
     def reset(self):
-        if not(self.turn):
+        if not (self.turn):
             lbl = self.finalLabel
-            i = self.finalMove
             c = self.finalColumn
             x = lbl.x()
-            y = lbl.y()
-            lbl.move(x, y - (130 * (6 - i)))
+            self.animation.stop()
+            lbl.move(x, 0)
             lbl.setHidden(True)
             self.columnCount[c] = self.columnCount[c] - 1
             self.turn = 1
