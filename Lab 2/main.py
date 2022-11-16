@@ -3,7 +3,10 @@ from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import QLabel
 from PyQt5.QtCore import QPoint, QEasingCurve, pyqtSignal, QPropertyAnimation
-
+from PyQt5.QtWidgets import *
+from PyQt5 import QtCore
+from PyQt5 import QtGui
+import sys
 
 class Label(QLabel):
     clicked = pyqtSignal()
@@ -20,6 +23,7 @@ class Ui_ConnectFour(object):
         ConnectFour.setObjectName("ConnectFour")
         ConnectFour.resize(1254, 1058)
         self.centralwidget = QtWidgets.QWidget(ConnectFour)
+
         self.centralwidget.setObjectName("centralwidget")
         self.board = QtWidgets.QLabel(self.centralwidget)
         self.board.setGeometry(QtCore.QRect(10, 130, 910, 781))
@@ -712,7 +716,8 @@ class Ui_ConnectFour(object):
 
     def retranslateUi(self, ConnectFour):
         _translate = QtCore.QCoreApplication.translate
-        ConnectFour.setWindowTitle(_translate("ConnectFour", "MainWindow"))
+        ConnectFour.setWindowTitle(_translate("ConnectFour", "Connect Four"))
+        ConnectFour.setWindowIcon(QtGui.QIcon("icon.png"))
         self.groupBox.setTitle(_translate("ConnectFour", "Choose your mode"))
         self.chooseMode.setText(_translate("ConnectFour", "Confirm"))
         self.confirmMove.setText(_translate("ConnectFour", "Confirm move"))
