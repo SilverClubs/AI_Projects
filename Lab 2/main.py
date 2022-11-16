@@ -608,7 +608,6 @@ class Ui_ConnectFour(object):
         self.r14.raise_()
         self.r15.raise_()
         self.r16.raise_()
-        self.board.raise_()
         self.r23.raise_()
         self.r25.raise_()
         self.r26.raise_()
@@ -687,6 +686,7 @@ class Ui_ConnectFour(object):
         self.y73.raise_()
         self.y76.raise_()
         self.y72.raise_()
+        self.board.raise_()
         self.groupBox.raise_()
         self.announceWinner.raise_()
         self.player1Score.raise_()
@@ -895,16 +895,12 @@ class Ui_ConnectFour(object):
         if not(self.turn):
             lbl = self.finalLabel
             i = self.finalMove
-            x = self.finalColumn
-            easing_curve = QEasingCurve.OutExpo
-            duration = 900
-            self.animation = QPropertyAnimation(lbl, b"pos")
-            self.animation.setEasingCurve(easing_curve)
-            self.animation.setDuration(duration)
-            self.animation.setEndValue(lbl.pos() + QPoint(0, -(130 * (6 - i))))
-            self.animation.start()
+            c = self.finalColumn
+            x = lbl.x()
+            y = lbl.y()
+            lbl.move(x, y - (130 * (6 - i)))
             lbl.setHidden(True)
-            self.columnCount[x] = self.columnCount[x] - 1
+            self.columnCount[c] = self.columnCount[c] - 1
             self.turn = 1
 
 
