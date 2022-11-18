@@ -2,6 +2,7 @@
 # 2 is black
 # TODO: Do we need different turns for minimize and maximize? Should we return elif turn for explore function?
 # TODO: Implement hueristic: goal check -1 + heuristic from 0 to 1
+# TODO: Way to return tree structure that can be used by treelib
 # TODO: Optimize code
 #       compress (perhaps also avoid format function)
 #       extra_expand
