@@ -12,6 +12,7 @@ import graphviz
 import sys
 
 # TODO: add AI timer after play
+# TODO: revise alpha beta algorithm and its trees
 
 
 class Label(QLabel):

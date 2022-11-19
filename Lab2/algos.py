@@ -1,8 +1,7 @@
 # 1 is red
 # 2 is black
-# TODO: Implement hueristic: goal check -1 + heuristic from 0 to 1
-# TODO: Way to return tree structure that can be used by treelib
 # TODO: Optimize code
+#       *** use binary form instead of expanding and compressing ***
 #       extra_expand
 #       score
 #       compress (perhaps also avoid format function)
