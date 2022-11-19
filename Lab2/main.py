@@ -6,6 +6,7 @@ from PyQt5.QtCore import QPoint, QEasingCurve, pyqtSignal, QPropertyAnimation
 from PyQt5.QtWidgets import *
 from PyQt5 import QtCore
 from PyQt5 import QtGui
+from algos import *
 import sys
 
 
@@ -472,6 +473,16 @@ class Ui_ConnectFour(object):
             [self.y71, self.y72, self.y73, self.y74, self.y75, self.y76],
         ]
 
+        self.gameboard = [
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+    ]
+
         self.columnCount = [0, 0, 0, 0, 0, 0, 0]
 
         self.turn = 1  # 1 is user 0 is com
@@ -625,6 +636,8 @@ class Ui_ConnectFour(object):
         self.c6.raise_()
         self.c7.raise_()
 
+
+
         self.comboBox.addItem("Minimax without alpha-beta pruning")
         self.comboBox.addItem("Minimax with alpha-beta pruning")
 
@@ -648,11 +661,23 @@ class Ui_ConnectFour(object):
         self.chooseMode.setText(_translate("ConnectFour", "Confirm"))
         self.confirmMove.setText(_translate("ConnectFour", "Confirm move"))
         self.removeMove.setText(_translate("ConnectFour", "Undo move"))
-        self.announceWinner.setText(_translate("ConnectFour", "TextLabel"))
-        self.player1Score.setText(_translate("ConnectFour", "TextLabel"))
-        self.comScore.setText(_translate("ConnectFour", "TextLabel"))
+        self.announceWinner.setText(_translate("ConnectFour", ""))
+        self.player1Score.setText(_translate("ConnectFour", "Player score: 0"))
+        self.comScore.setText(_translate("ConnectFour", "Com score: 0"))
+        self.comScore.setFont(QFont("Arial", 18))
+        self.player1Score.setFont(QFont("Arial", 18))
+        self.announceWinner.setStyleSheet("background-color: white")
+
+    def changeturn(self):
+        if self.turn == 1:
+            self.turn = 0
+        else:
+            self.turn = 1
 
     def add1(self):
+        self.announceWinner.setText("")
+        self.announceWinner.setFont(QFont("Arial", 13))
+        self.announceWinner.setStyleSheet("background-color: white")
         if self.columnCount[0] == 6:
             self.announceWinner.setText(" No more pucks can be added here!!")
             self.announceWinner.setFont(QFont("Arial", 13))
@@ -673,9 +698,16 @@ class Ui_ConnectFour(object):
             self.animation.setEndValue(lbl.pos() + QPoint(0, 130 * (6 - i)))
             self.animation.start()
             self.columnCount[0] = self.columnCount[0] + 1
-            self.turn = 0
+            self.gameboard[0][5-i] = 2
+            score = scoregui(extra_compress(swaparr(self.gameboard)))
+            self.player1Score.setText("Player score: " + str(score[0]))
+            self.comScore.setText("Com score: " + str(score[1]))
+            self.animation.finished.connect(self.changeturn)
 
     def add2(self):
+        self.announceWinner.setText("")
+        self.announceWinner.setFont(QFont("Arial", 13))
+        self.announceWinner.setStyleSheet("background-color: white")
         if self.columnCount[1] == 6:
             self.announceWinner.setText("No more pucks can be added here!!")
             self.announceWinner.setFont(QFont("Arial", 13))
@@ -696,9 +728,16 @@ class Ui_ConnectFour(object):
             self.animation.setEndValue(lbl.pos() + QPoint(0, 130 * (6 - i)))
             self.animation.start()
             self.columnCount[1] = self.columnCount[1] + 1
-            self.turn = 0
+            self.gameboard[1][5-i] = 2
+            score = scoregui(extra_compress(swaparr(self.gameboard)))
+            self.player1Score.setText("Player score: " + str(score[0]))
+            self.comScore.setText("Com score: " + str(score[1]))
+            self.animation.finished.connect(self.changeturn)
 
     def add3(self):
+        self.announceWinner.setText("")
+        self.announceWinner.setFont(QFont("Arial", 13))
+        self.announceWinner.setStyleSheet("background-color: white")
         if self.columnCount[2] == 6:
             self.announceWinner.setText("No more pucks can be added here!!")
             self.announceWinner.setFont(QFont("Arial", 13))
@@ -719,9 +758,16 @@ class Ui_ConnectFour(object):
             self.animation.setEndValue(lbl.pos() + QPoint(0, 130 * (6 - i)))
             self.animation.start()
             self.columnCount[2] = self.columnCount[2] + 1
-            self.turn = 0
+            self.gameboard[2][5-i] = 2
+            score = scoregui(extra_compress(swaparr(self.gameboard)))
+            self.player1Score.setText("Player score: " + str(score[0]))
+            self.comScore.setText("Com score: " + str(score[1]))
+            self.animation.finished.connect(self.changeturn)
 
     def add4(self):
+        self.announceWinner.setText("")
+        self.announceWinner.setFont(QFont("Arial", 13))
+        self.announceWinner.setStyleSheet("background-color: white")
         if self.columnCount[3] == 6:
             self.announceWinner.setText("No more pucks can be added here!!")
             self.announceWinner.setFont(QFont("Arial", 13))
@@ -742,9 +788,16 @@ class Ui_ConnectFour(object):
             self.animation.setEndValue(lbl.pos() + QPoint(0, 130 * (6 - i)))
             self.animation.start()
             self.columnCount[3] = self.columnCount[3] + 1
-            self.turn = 0
+            self.gameboard[3][5-i] = 2
+            score = scoregui(extra_compress(swaparr(self.gameboard)))
+            self.player1Score.setText("Player score: " + str(score[0]))
+            self.comScore.setText("Com score: " + str(score[1]))
+            self.animation.finished.connect(self.changeturn)
 
     def add5(self):
+        self.announceWinner.setText("")
+        self.announceWinner.setFont(QFont("Arial", 13))
+        self.announceWinner.setStyleSheet("background-color: white")
         if self.columnCount[4] == 6:
             self.announceWinner.setText("No more pucks can be added here!!")
             self.announceWinner.setFont(QFont("Arial", 13))
@@ -765,9 +818,16 @@ class Ui_ConnectFour(object):
             self.animation.setEndValue(lbl.pos() + QPoint(0, 130 * (6 - i)))
             self.animation.start()
             self.columnCount[4] = self.columnCount[4] + 1
-            self.turn = 0
+            self.gameboard[4][5-i] = 2
+            score = scoregui(extra_compress(swaparr(self.gameboard)))
+            self.player1Score.setText("Player score: " + str(score[0]))
+            self.comScore.setText("Com score: " + str(score[1]))
+            self.animation.finished.connect(self.changeturn)
 
     def add6(self):
+        self.announceWinner.setText("")
+        self.announceWinner.setFont(QFont("Arial", 13))
+        self.announceWinner.setStyleSheet("background-color: white")
         if self.columnCount[5] == 6:
             self.announceWinner.setText("No more pucks can be added here!!")
             self.announceWinner.setFont(QFont("Arial", 13))
@@ -788,9 +848,16 @@ class Ui_ConnectFour(object):
             self.animation.setEndValue(lbl.pos() + QPoint(0, 130 * (6 - i)))
             self.animation.start()
             self.columnCount[5] = self.columnCount[5] + 1
-            self.turn = 0
+            self.gameboard[5][5-i] = 2
+            score = scoregui(extra_compress(swaparr(self.gameboard)))
+            self.player1Score.setText("Player score: " + str(score[0]))
+            self.comScore.setText("Com score: " + str(score[1]))
+            self.animation.finished.connect(self.changeturn)
 
     def add7(self):
+        self.announceWinner.setText("")
+        self.announceWinner.setFont(QFont("Arial", 13))
+        self.announceWinner.setStyleSheet("background-color: white")
         if self.columnCount[6] == 6:
             self.announceWinner.setText("No more pucks can be added here!!")
             self.announceWinner.setFont(QFont("Arial", 13))
@@ -811,7 +878,11 @@ class Ui_ConnectFour(object):
             self.animation.setEndValue(lbl.pos() + QPoint(0, 130 * (6 - i)))
             self.animation.start()
             self.columnCount[6] = self.columnCount[6] + 1
-            self.turn = 0
+            self.gameboard[6][5-i] = 2
+            score = scoregui(extra_compress(swaparr(self.gameboard)))
+            self.player1Score.setText("Player score: " + str(score[0]))
+            self.comScore.setText("Com score: " + str(score[1]))
+            self.animation.finished.connect(self.changeturn)
 
     def reset(self):
         if not (self.turn):
@@ -823,6 +894,83 @@ class Ui_ConnectFour(object):
             lbl.setHidden(True)
             self.columnCount[c] = self.columnCount[c] - 1
             self.turn = 1
+
+
+    def call(self):
+        if self.turn == 0:
+            temp = swaparr(self.gameboard)
+            board = extra_compress(temp)
+            if self.comboBox.currentText() == "Minimax with alpha-beta pruning":
+                diff = -1
+                new = maximize_alpha(board, 8, -2000, 2000)
+                newBoard = new[1]
+                newArray = extra_expand(expand(newBoard))
+                temp2 = swaparr2(newArray)
+                for i in range(7):
+                    if temp2[i] != self.gameboard[i]:
+                        diff = i
+
+                j = self.columnCount[diff]
+                lbl = self.yellowPucks[diff][j]
+                lbl.setHidden(False)
+                easing_curve = QEasingCurve.OutExpo
+                duration = 900
+                self.animation = QPropertyAnimation(lbl, b"pos")
+                self.animation.setEasingCurve(easing_curve)
+                self.animation.setDuration(duration)
+                self.animation.setEndValue(lbl.pos() + QPoint(0, 130 * (6 - j)))
+                self.animation.start()
+                self.columnCount[diff] = self.columnCount[diff] + 1
+                self.gameboard = temp2
+                self.animation.finished.connect(self.changeturn)
+
+            elif "Minimax without alpha-beta pruning":
+                diff = -1
+                new = maximize(board, 2)
+                newBoard = new[1]
+                newArray = extra_expand(expand(newBoard))
+                temp2 = swaparr2(newArray)
+                for i in range(7):
+                    if temp2[i] != self.gameboard[i]:
+                        diff = i
+
+                j = self.columnCount[diff]
+                lbl = self.yellowPucks[diff][j]
+                lbl.setHidden(False)
+                easing_curve = QEasingCurve.OutExpo
+                duration = 900
+                self.animation = QPropertyAnimation(lbl, b"pos")
+                self.animation.setEasingCurve(easing_curve)
+                self.animation.setDuration(duration)
+                self.animation.setEndValue(lbl.pos() + QPoint(0, 130 * (6 - j)))
+                self.animation.start()
+                self.columnCount[diff] = self.columnCount[diff] + 1
+                self.gameboard = temp2
+                self.animation.finished.connect(self.changeturn)
+
+            score = scoregui(extra_compress(swaparr(self.gameboard)))
+            self.player1Score.setText("Player score: " + str(score[0]))
+            self.comScore.setText("Com score: " + str(score[1]))
+            try :
+                done = 1
+                for i in range(7):
+                    if self.columnCount[i] != 6:
+                        done = 0
+
+                if done:
+                    if (score[0] - score[1]) > 0:
+                        self.announceWinner.setText("You Won!!")
+                        self.announceWinner.setFont(QFont("Arial", 18))
+                        self.announceWinner.setStyleSheet("background-color: green")
+
+                    else:
+                        self.announceWinner.setText("You lost!!")
+                        self.announceWinner.setFont(QFont("Arial", 18))
+                        self.announceWinner.setStyleSheet("background-color: #FF6961")
+            except Exception as e:
+                print(e)
+
+
 
 
 if __name__ == "__main__":

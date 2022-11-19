@@ -11,6 +11,43 @@
 import functools
 
 
+# From gui to algos
+def swaparr(arr):
+    board = [
+        # 0,1,2,3,4,5,6
+        [0, 0, 0, 0, 0, 0, 0],  # row 1
+        [0, 0, 0, 0, 0, 0, 0],  # row 2
+        [0, 0, 0, 0, 0, 0, 0],  # row 3
+        [0, 0, 0, 0, 0, 0, 0],  # row 4
+        [0, 0, 0, 0, 0, 0, 0],  # row 5
+        [0, 0, 0, 0, 0, 0, 0]  # row 6
+    ]
+
+    for i in range(7):
+        for j in range(6):
+            board[j][i] = arr[i][j]
+
+    return board
+
+# From algos to gui
+def swaparr2(arr):
+    board = [
+        # 0,1,2,3,4,5,6
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0]
+    ]
+
+    for i in range(6):
+        for j in range(7):
+            board[j][i] = arr[i][j]
+
+    return board
+
 weights = [  # max value is 62
     [2, 3, 7, 7, 3, 2],
     [3, 6, 7, 7, 6, 3],
@@ -328,6 +365,64 @@ def score(int_board):
 
     score_diff = scoreai - scorehi
     return score_diff
+
+
+def scoregui(int_board):
+    cols = expand(int_board)
+    board = extra_expand(cols)
+    scoreai = 0
+    scorehi = 0
+    for i in range(6):  # loops row by row
+        for j in range(4):
+            if (
+                    board[i][j] == 1
+                    and board[i][j + 1] == 1
+                    and board[i][j + 2] == 1
+                    and board[i][j + 3] == 1
+            ):
+                scoreai = scoreai + 1
+            elif (
+                    board[i][j] == 2
+                    and board[i][j + 1] == 2
+                    and board[i][j + 2] == 2
+                    and board[i][j + 3] == 2
+            ):
+                scorehi = scorehi + 1
+
+    for i in range(7):  # loops column by column
+        for j in range(3):
+            if (
+                    board[j][i] == 1
+                    and board[j + 1][i] == 1
+                    and board[j + 2][i] == 1
+                    and board[j + 3][i] == 1
+            ):
+                scoreai = scoreai + 1
+            elif (
+                    board[j][i] == 2
+                    and board[j + 1][i] == 2
+                    and board[j + 2][i] == 2
+                    and board[j + 3][i] == 2
+            ):
+                scorehi = scorehi + 1
+
+    for i in range(3):
+        for j in range(4):
+            if (
+                    board[i][j] == 1
+                    and board[i + 1][j + 1] == 1
+                    and board[i + 2][j + 2] == 1
+                    and board[i + 3][j + 3] == 1
+            ):
+                scoreai = scoreai + 1
+            elif (
+                    board[i][j] == 2
+                    and board[i + 1][j + 1] == 2
+                    and board[i + 2][j + 2] == 2
+                    and board[i + 3][j + 3] == 2
+            ):
+                scorehi = scorehi + 1
+    return scorehi,scoreai
 
 
 if __name__ == "__main__":
