@@ -375,53 +375,71 @@ def scoregui(int_board):
     for i in range(6):  # loops row by row
         for j in range(4):
             if (
-                    board[i][j] == 1
-                    and board[i][j + 1] == 1
-                    and board[i][j + 2] == 1
-                    and board[i][j + 3] == 1
+                board[i][j] == 1
+                and board[i][j + 1] == 1
+                and board[i][j + 2] == 1
+                and board[i][j + 3] == 1
             ):
                 scoreai = scoreai + 1
             elif (
-                    board[i][j] == 2
-                    and board[i][j + 1] == 2
-                    and board[i][j + 2] == 2
-                    and board[i][j + 3] == 2
+                board[i][j] == 2
+                and board[i][j + 1] == 2
+                and board[i][j + 2] == 2
+                and board[i][j + 3] == 2
             ):
                 scorehi = scorehi + 1
 
     for i in range(7):  # loops column by column
         for j in range(3):
             if (
-                    board[j][i] == 1
-                    and board[j + 1][i] == 1
-                    and board[j + 2][i] == 1
-                    and board[j + 3][i] == 1
+                board[j][i] == 1
+                and board[j + 1][i] == 1
+                and board[j + 2][i] == 1
+                and board[j + 3][i] == 1
             ):
                 scoreai = scoreai + 1
             elif (
-                    board[j][i] == 2
-                    and board[j + 1][i] == 2
-                    and board[j + 2][i] == 2
-                    and board[j + 3][i] == 2
+                board[j][i] == 2
+                and board[j + 1][i] == 2
+                and board[j + 2][i] == 2
+                and board[j + 3][i] == 2
             ):
                 scorehi = scorehi + 1
 
-    for i in range(3):
+    for i in range(3):  # bottom left top right diagonals
         for j in range(4):
             if (
-                    board[i][j] == 1
-                    and board[i + 1][j + 1] == 1
-                    and board[i + 2][j + 2] == 1
-                    and board[i + 3][j + 3] == 1
+                board[i][j] == 1
+                and board[i + 1][j + 1] == 1
+                and board[i + 2][j + 2] == 1
+                and board[i + 3][j + 3] == 1
             ):
                 scoreai = scoreai + 1
             elif (
-                    board[i][j] == 2
-                    and board[i + 1][j + 1] == 2
-                    and board[i + 2][j + 2] == 2
-                    and board[i + 3][j + 3] == 2
+                board[i][j] == 2
+                and board[i + 1][j + 1] == 2
+                and board[i + 2][j + 2] == 2
+                and board[i + 3][j + 3] == 2
             ):
                 scorehi = scorehi + 1
+
+    for i in range(3):  # bottom right top left diagonals
+        for j in range(3, 7):
+            if (
+                board[i][j] == 1
+                and board[i + 1][j - 1] == 1
+                and board[i + 2][j - 2] == 1
+                and board[i + 3][j - 3] == 1
+            ):
+                scoreai = scoreai + 1
+            elif (
+                board[i][j] == 2
+                and board[i + 1][j - 1] == 2
+                and board[i + 2][j - 2] == 2
+                and board[i + 3][j - 3] == 2
+            ):
+                scorehi = scorehi + 1
+
     return scorehi,scoreai
 
 
