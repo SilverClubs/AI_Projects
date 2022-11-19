@@ -20,7 +20,7 @@ def swaparr(arr):
         [0, 0, 0, 0, 0, 0, 0],  # row 3
         [0, 0, 0, 0, 0, 0, 0],  # row 4
         [0, 0, 0, 0, 0, 0, 0],  # row 5
-        [0, 0, 0, 0, 0, 0, 0]  # row 6
+        [0, 0, 0, 0, 0, 0, 0],  # row 6
     ]
 
     for i in range(7):
@@ -28,6 +28,7 @@ def swaparr(arr):
             board[j][i] = arr[i][j]
 
     return board
+
 
 # From algos to gui
 def swaparr2(arr):
@@ -39,7 +40,7 @@ def swaparr2(arr):
         [0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0]
+        [0, 0, 0, 0, 0, 0],
     ]
 
     for i in range(6):
@@ -47,6 +48,7 @@ def swaparr2(arr):
             board[j][i] = arr[i][j]
 
     return board
+
 
 weights = [  # max value is 62
     [2, 3, 7, 7, 3, 2],
@@ -315,51 +317,51 @@ def score(int_board):
     for i in range(7):  # loops column by column
         for j in range(3):
             if (
-                board[j][i] == 1
-                and board[j + 1][i] == 1
+                board[j + 3][i] == 1
                 and board[j + 2][i] == 1
-                and board[j + 3][i] == 1
+                and board[j + 1][i] == 1
+                and board[j][i] == 1
             ):
                 scoreai = scoreai + 1
             elif (
-                board[j][i] == 2
-                and board[j + 1][i] == 2
+                board[j + 3][i] == 2
                 and board[j + 2][i] == 2
-                and board[j + 3][i] == 2
+                and board[j + 1][i] == 2
+                and board[j][i] == 2
             ):
                 scorehi = scorehi + 1
 
     for i in range(3):  # bottom left top right diagonals
         for j in range(4):
             if (
-                board[i][j] == 1
-                and board[i + 1][j + 1] == 1
+                board[i + 3][j + 3] == 1
                 and board[i + 2][j + 2] == 1
-                and board[i + 3][j + 3] == 1
+                and board[i + 1][j + 1] == 1
+                and board[i][j] == 1
             ):
                 scoreai = scoreai + 1
             elif (
-                board[i][j] == 2
-                and board[i + 1][j + 1] == 2
+                board[i + 3][j + 3] == 2
                 and board[i + 2][j + 2] == 2
-                and board[i + 3][j + 3] == 2
+                and board[i + 1][j + 1] == 2
+                and board[i][j] == 2
             ):
                 scorehi = scorehi + 1
 
     for i in range(3):  # bottom right top left diagonals
         for j in range(3, 7):
             if (
-                board[i][j] == 1
-                and board[i + 1][j - 1] == 1
+                board[i + 3][j - 3] == 1
                 and board[i + 2][j - 2] == 1
-                and board[i + 3][j - 3] == 1
+                and board[i + 1][j - 1] == 1
+                and board[i][j] == 1
             ):
                 scoreai = scoreai + 1
             elif (
-                board[i][j] == 2
-                and board[i + 1][j - 1] == 2
+                board[i + 3][j - 3] == 2
                 and board[i + 2][j - 2] == 2
-                and board[i + 3][j - 3] == 2
+                and board[i + 1][j - 1] == 2
+                and board[i][j] == 2
             ):
                 scorehi = scorehi + 1
 
@@ -392,55 +394,55 @@ def scoregui(int_board):
     for i in range(7):  # loops column by column
         for j in range(3):
             if (
-                board[j][i] == 1
-                and board[j + 1][i] == 1
+                board[j + 3][i] == 1
                 and board[j + 2][i] == 1
-                and board[j + 3][i] == 1
+                and board[j + 1][i] == 1
+                and board[j][i] == 1
             ):
                 scoreai = scoreai + 1
             elif (
-                board[j][i] == 2
-                and board[j + 1][i] == 2
+                board[j + 3][i] == 2
                 and board[j + 2][i] == 2
-                and board[j + 3][i] == 2
+                and board[j + 1][i] == 2
+                and board[j][i] == 2
             ):
                 scorehi = scorehi + 1
 
     for i in range(3):  # bottom left top right diagonals
         for j in range(4):
             if (
-                board[i][j] == 1
-                and board[i + 1][j + 1] == 1
+                board[i + 3][j + 3] == 1
                 and board[i + 2][j + 2] == 1
-                and board[i + 3][j + 3] == 1
+                and board[i + 1][j + 1] == 1
+                and board[i][j] == 1
             ):
                 scoreai = scoreai + 1
             elif (
-                board[i][j] == 2
-                and board[i + 1][j + 1] == 2
+                board[i + 3][j + 3] == 2
                 and board[i + 2][j + 2] == 2
-                and board[i + 3][j + 3] == 2
+                and board[i + 1][j + 1] == 2
+                and board[i][j] == 2
             ):
                 scorehi = scorehi + 1
 
     for i in range(3):  # bottom right top left diagonals
         for j in range(3, 7):
             if (
-                board[i][j] == 1
-                and board[i + 1][j - 1] == 1
+                board[i + 3][j - 3] == 1
                 and board[i + 2][j - 2] == 1
-                and board[i + 3][j - 3] == 1
+                and board[i + 1][j - 1] == 1
+                and board[i][j] == 1
             ):
                 scoreai = scoreai + 1
             elif (
-                board[i][j] == 2
-                and board[i + 1][j - 1] == 2
+                board[i + 3][j - 3] == 2
                 and board[i + 2][j - 2] == 2
-                and board[i + 3][j - 3] == 2
+                and board[i + 1][j - 1] == 2
+                and board[i][j] == 2
             ):
                 scorehi = scorehi + 1
 
-    return scorehi,scoreai
+    return scorehi, scoreai
 
 
 if __name__ == "__main__":

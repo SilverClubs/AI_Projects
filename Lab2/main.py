@@ -529,12 +529,13 @@ class Ui_ConnectFour(object):
         self.announceWinner = QtWidgets.QLabel(self.centralwidget)
         self.announceWinner.setGeometry(QtCore.QRect(950, 160, 281, 61))
         self.announceWinner.setObjectName("announceWinner")
+        self.announceWinner.setAlignment(QtCore.Qt.AlignCenter)
         self.player1Score = QtWidgets.QLabel(self.centralwidget)
         self.player1Score.setGeometry(QtCore.QRect(950, 260, 281, 61))
         self.player1Score.setObjectName("player1Score")
-        self.comScore = QtWidgets.QLabel(self.centralwidget)
-        self.comScore.setGeometry(QtCore.QRect(950, 330, 281, 61))
-        self.comScore.setObjectName("comScore")
+        self.aiScore = QtWidgets.QLabel(self.centralwidget)
+        self.aiScore.setGeometry(QtCore.QRect(950, 330, 281, 61))
+        self.aiScore.setObjectName("aiScore")
         self.c1 = Label(self.centralwidget)
         self.c1.setGeometry(QtCore.QRect(10, 130, 131, 781))
         self.c1.setMouseTracking(False)
@@ -644,7 +645,7 @@ class Ui_ConnectFour(object):
         self.groupBox.raise_()
         self.announceWinner.raise_()
         self.player1Score.raise_()
-        self.comScore.raise_()
+        self.aiScore.raise_()
         self.c1.raise_()
         self.c2.raise_()
         self.c3.raise_()
@@ -679,8 +680,8 @@ class Ui_ConnectFour(object):
         self.resetBoard.setText(_translate("ConnectFour", "Reset board"))
         self.announceWinner.setText(_translate("ConnectFour", ""))
         self.player1Score.setText(_translate("ConnectFour", "Player score: 0"))
-        self.comScore.setText(_translate("ConnectFour", "AI score: 0"))
-        self.comScore.setFont(QFont("Arial", 18))
+        self.aiScore.setText(_translate("ConnectFour", "AI score: 0"))
+        self.aiScore.setFont(QFont("Arial", 18))
         self.player1Score.setFont(QFont("Arial", 18))
         self.announceWinner.setStyleSheet("")
 
@@ -697,7 +698,7 @@ class Ui_ConnectFour(object):
             self.announceWinner.setFont(QFont("Arial", 13))
             self.announceWinner.setStyleSheet("")
             if self.columnCount[0] == 6:
-                self.announceWinner.setText(" No more pucks can be added here!!")
+                self.announceWinner.setText("No more pucks can be added here!!")
                 self.announceWinner.setFont(QFont("Arial", 13))
                 self.announceWinner.setStyleSheet("background-color: #FF6961")
 
@@ -719,9 +720,10 @@ class Ui_ConnectFour(object):
                 self.gameboard[0][5 - i] = 2
                 score = scoregui(extra_compress(swaparr(self.gameboard)))
                 self.player1Score.setText("Player score: " + str(score[0]))
-                self.comScore.setText("AI score: " + str(score[1]))
+                self.aiScore.setText("AI score: " + str(score[1]))
                 self.animating = True
                 self.animation.finished.connect(self.changeturn)
+                self.check_end()
 
     def add2(self):
         if not self.animating:
@@ -751,9 +753,10 @@ class Ui_ConnectFour(object):
                 self.gameboard[1][5 - i] = 2
                 score = scoregui(extra_compress(swaparr(self.gameboard)))
                 self.player1Score.setText("Player score: " + str(score[0]))
-                self.comScore.setText("AI score: " + str(score[1]))
+                self.aiScore.setText("AI score: " + str(score[1]))
                 self.animating = True
                 self.animation.finished.connect(self.changeturn)
+                self.check_end()
 
     def add3(self):
         if not self.animating:
@@ -783,9 +786,10 @@ class Ui_ConnectFour(object):
                 self.gameboard[2][5 - i] = 2
                 score = scoregui(extra_compress(swaparr(self.gameboard)))
                 self.player1Score.setText("Player score: " + str(score[0]))
-                self.comScore.setText("AI score: " + str(score[1]))
+                self.aiScore.setText("AI score: " + str(score[1]))
                 self.animating = True
                 self.animation.finished.connect(self.changeturn)
+                self.check_end()
 
     def add4(self):
         if not self.animating:
@@ -815,9 +819,10 @@ class Ui_ConnectFour(object):
                 self.gameboard[3][5 - i] = 2
                 score = scoregui(extra_compress(swaparr(self.gameboard)))
                 self.player1Score.setText("Player score: " + str(score[0]))
-                self.comScore.setText("AI score: " + str(score[1]))
+                self.aiScore.setText("AI score: " + str(score[1]))
                 self.animating = True
                 self.animation.finished.connect(self.changeturn)
+                self.check_end()
 
     def add5(self):
         if not self.animating:
@@ -847,9 +852,10 @@ class Ui_ConnectFour(object):
                 self.gameboard[4][5 - i] = 2
                 score = scoregui(extra_compress(swaparr(self.gameboard)))
                 self.player1Score.setText("Player score: " + str(score[0]))
-                self.comScore.setText("AI score: " + str(score[1]))
+                self.aiScore.setText("AI score: " + str(score[1]))
                 self.animating = True
                 self.animation.finished.connect(self.changeturn)
+                self.check_end()
 
     def add6(self):
         if not self.animating:
@@ -879,9 +885,10 @@ class Ui_ConnectFour(object):
                 self.gameboard[5][5 - i] = 2
                 score = scoregui(extra_compress(swaparr(self.gameboard)))
                 self.player1Score.setText("Player score: " + str(score[0]))
-                self.comScore.setText("AI score: " + str(score[1]))
+                self.aiScore.setText("AI score: " + str(score[1]))
                 self.animating = True
                 self.animation.finished.connect(self.changeturn)
+                self.check_end()
 
     def add7(self):
         if not self.animating:
@@ -911,9 +918,10 @@ class Ui_ConnectFour(object):
                 self.gameboard[6][5 - i] = 2
                 score = scoregui(extra_compress(swaparr(self.gameboard)))
                 self.player1Score.setText("Player score: " + str(score[0]))
-                self.comScore.setText("AI score: " + str(score[1]))
+                self.aiScore.setText("AI score: " + str(score[1]))
                 self.animating = True
                 self.animation.finished.connect(self.changeturn)
+                self.check_end()
 
     def undo_move(self):
         if not (self.turn):
@@ -931,6 +939,10 @@ class Ui_ConnectFour(object):
         self.turn = 1 - self.turn
 
     def reset_board(self):
+        self.announceWinner.setText("")
+        self.announceWinner.setFont(QFont("Arial", 13))
+        self.announceWinner.setStyleSheet("")
+
         self.gameboard = [
             [0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0],
@@ -940,6 +952,10 @@ class Ui_ConnectFour(object):
             [0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0],
         ]
+
+        score = scoregui(extra_compress(swaparr(self.gameboard)))
+        self.player1Score.setText("Player score: " + str(score[0]))
+        self.aiScore.setText("AI score: " + str(score[1]))
 
         self.columnCount = [0, 0, 0, 0, 0, 0, 0]
 
@@ -1038,30 +1054,30 @@ class Ui_ConnectFour(object):
 
             score = scoregui(extra_compress(swaparr(self.gameboard)))
             self.player1Score.setText("Player score: " + str(score[0]))
-            self.comScore.setText("AI score: " + str(score[1]))
-            try:
-                done = 1
-                for i in range(7):
-                    if self.columnCount[i] != 6:
-                        done = 0
+            self.aiScore.setText("AI score: " + str(score[1]))
+            self.check_end()
 
-                if done:
-                    if (score[0] - score[1]) > 0:
-                        self.announceWinner.setText("You won!!")
-                        self.announceWinner.setFont(QFont("Arial", 18))
-                        self.announceWinner.setStyleSheet("background-color: green")
+    def check_end(self):
+        done = 1
+        for i in range(7):
+            if self.columnCount[i] != 6:
+                done = 0
 
-                    elif score[0] == score[1]:
-                        self.announceWinner.setText("You tied!!")
-                        self.announceWinner.setFont(QFont("Arial", 18))
-                        self.announceWinner.setStyleSheet("background-color: Yellow")
+        if done:
+            if (score[0] - score[1]) > 0:
+                self.announceWinner.setText("You won!!")
+                self.announceWinner.setFont(QFont("Arial", 18))
+                self.announceWinner.setStyleSheet("background-color: green")
 
-                    else:
-                        self.announceWinner.setText("You lost!!")
-                        self.announceWinner.setFont(QFont("Arial", 18))
-                        self.announceWinner.setStyleSheet("background-color: #FF6961")
-            except Exception as e:
-                print(e)
+            elif score[0] == score[1]:
+                self.announceWinner.setText("You tied!!")
+                self.announceWinner.setFont(QFont("Arial", 18))
+                self.announceWinner.setStyleSheet("background-color: Yellow")
+
+            else:
+                self.announceWinner.setText("You lost!!")
+                self.announceWinner.setFont(QFont("Arial", 18))
+                self.announceWinner.setStyleSheet("background-color: #FF6961")
 
 
 if __name__ == "__main__":
