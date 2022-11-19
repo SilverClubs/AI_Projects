@@ -7,7 +7,11 @@ from PyQt5.QtWidgets import *
 from PyQt5 import QtCore
 from PyQt5 import QtGui
 from algos import *
+import treelib
+import graphviz
 import sys
+
+# TODO: add AI timer after play
 
 
 class Label(QLabel):
@@ -1003,12 +1007,14 @@ class Ui_ConnectFour(object):
             if self.columnCount[i] != 6:
                 done = 0
         if not self.animating and self.turn == 0 and not done:
+            self.tree = treelib.Tree()
             depth = self.spinbox.value()
             temp = swaparr(self.gameboard)
             board = extra_compress(temp)
+            parent = None
             if self.comboBox.currentText() == "Minimax with alpha-beta pruning":
                 diff = -1
-                new = maximize_alpha(board, depth, -2000, 2000)
+                new = maximize_alpha(board, depth, -2000, 2000, self.tree, parent)
                 newBoard = new[1]
                 newArray = extra_expand(expand(newBoard))
                 temp2 = swaparr2(newArray)
@@ -1033,7 +1039,7 @@ class Ui_ConnectFour(object):
 
             elif "Minimax without alpha-beta pruning":
                 diff = -1
-                new = maximize(board, depth)
+                new = maximize(board, depth, self.tree, parent)
                 newBoard = new[1]
                 newArray = extra_expand(expand(newBoard))
                 temp2 = swaparr2(newArray)
@@ -1055,6 +1061,10 @@ class Ui_ConnectFour(object):
                 self.gameboard = temp2
                 self.animating = True
                 self.animation.finished.connect(self.changeturn)
+
+            self.tree.to_graphviz("tree.dot")
+            s = graphviz.Source.from_file("tree.dot")
+            s.render("tree.gv", format="svg", view=False)
 
             score = scoregui(extra_compress(swaparr(self.gameboard)))
             self.player1Score.setText("Player score: " + str(score[0]))

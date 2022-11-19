@@ -9,7 +9,8 @@
 #       very low priority: explore
 
 import functools
-
+import treelib
+import uuid
 
 # From gui to algos
 def swaparr(arr):
@@ -178,7 +179,9 @@ def is_goal(int_board):
 # def game(int_board,turn):
 
 
-def minimize(int_board, depth):
+def minimize(int_board, depth, tree, parentID):
+    pID = uuid.uuid1()
+    tree.create_node(int_board, pID, parent=parentID)
     if is_goal(int_board):
         return score(int_board), int_board
     if depth == 0:
@@ -188,14 +191,16 @@ def minimize(int_board, depth):
     best_move = 100000000
     best_neighbour = 0
     for neighbour in neighbours:
-        move = maximize(neighbour, depth - 1)
+        move = maximize(neighbour, depth - 1, tree, pID)
         if move[0] < best_move:
             best_move = move[0]
             best_neighbour = neighbour
     return best_move, best_neighbour
 
 
-def maximize(int_board, depth):
+def maximize(int_board, depth, tree, parentID):
+    pID = uuid.uuid1()
+    tree.create_node(int_board, pID, parent=parentID)
     if is_goal(int_board):
         return score(int_board), int_board
     if depth == 0:
@@ -205,14 +210,16 @@ def maximize(int_board, depth):
     best_move = -100000000
     best_neighbour = 0
     for neighbour in neighbours:
-        move = minimize(neighbour, depth - 1)
+        move = minimize(neighbour, depth - 1, tree, pID)
         if move[0] > best_move:
             best_move = move[0]
             best_neighbour = neighbour
     return best_move, best_neighbour
 
 
-def minimize_beta(int_board, depth, alpha, beta):
+def minimize_beta(int_board, depth, alpha, beta, tree, parentID):
+    pID = uuid.uuid1()
+    tree.create_node(int_board, pID, parent=parentID)
     if is_goal(int_board):
         return score(int_board), int_board
     if depth == 0:
@@ -222,7 +229,7 @@ def minimize_beta(int_board, depth, alpha, beta):
     best_move = 100000000
     best_neighbour = 0
     for neighbour in neighbours:
-        move = maximize_alpha(neighbour, depth - 1, alpha, beta)
+        move = maximize_alpha(neighbour, depth - 1, alpha, beta, tree, pID)
         if move[0] < best_move:
             best_move = move[0]
             best_neighbour = neighbour
@@ -234,7 +241,9 @@ def minimize_beta(int_board, depth, alpha, beta):
     return best_move, best_neighbour
 
 
-def maximize_alpha(int_board, depth, alpha, beta):
+def maximize_alpha(int_board, depth, alpha, beta, tree, parentID):
+    pID = uuid.uuid1()
+    tree.create_node(int_board, pID, parent=parentID)
     if is_goal(int_board):
         return score(int_board), int_board
     if depth == 0:
@@ -244,7 +253,7 @@ def maximize_alpha(int_board, depth, alpha, beta):
     best_move = -100000000
     best_neighbour = 0
     for neighbour in neighbours:
-        move = minimize_beta(neighbour, depth - 1, alpha, beta)
+        move = minimize_beta(neighbour, depth - 1, alpha, beta, tree, pID)
         if move[0] > best_move:
             best_move = move[0]
             best_neighbour = neighbour
