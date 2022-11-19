@@ -11,6 +11,7 @@ import treelib
 import graphviz
 import sys
 
+# TODO: make tree visualization an option, using a button or something
 # TODO: add AI timer after play
 # TODO: revise alpha beta algorithm and its trees
 

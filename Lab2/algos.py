@@ -6,6 +6,7 @@
 #       score
 #       compress (perhaps also avoid format function)
 #       very low priority: explore
+# TODO: revise alpha beta algorithm and its trees
 
 import functools
 import treelib
@@ -186,7 +187,6 @@ def minimize(int_board, depth, tree, parentID):
     if depth == 0:
         return heuristic(int_board), int_board
     neighbours = explore(int_board, 2)
-    neighbours = sorted(neighbours, key=functools.cmp_to_key(comp_heuristic))
     best_move = 100000000
     best_neighbour = 0
     for neighbour in neighbours:
@@ -205,7 +205,6 @@ def maximize(int_board, depth, tree, parentID):
     if depth == 0:
         return heuristic(int_board), int_board
     neighbours = explore(int_board, 1)
-    neighbours = sorted(neighbours, key=functools.cmp_to_key(comp_heuristic))
     best_move = -100000000
     best_neighbour = 0
     for neighbour in neighbours:
@@ -224,7 +223,6 @@ def minimize_beta(int_board, depth, alpha, beta, tree, parentID):
     if depth == 0:
         return heuristic(int_board), int_board
     neighbours = explore(int_board, 2)
-    neighbours = sorted(neighbours, key=functools.cmp_to_key(comp_heuristic))
     best_move = 100000000
     best_neighbour = 0
     for neighbour in neighbours:
@@ -248,7 +246,6 @@ def maximize_alpha(int_board, depth, alpha, beta, tree, parentID):
     if depth == 0:
         return heuristic(int_board), int_board
     neighbours = explore(int_board, 1)
-    neighbours = sorted(neighbours, key=functools.cmp_to_key(comp_heuristic))
     best_move = -100000000
     best_neighbour = 0
     for neighbour in neighbours:
@@ -465,20 +462,11 @@ if __name__ == "__main__":
         [1, 2, 1, 2, 1, 2, 1],  # row 6
     ]
 
-    board = [
-        # 0,1,2,3,4,5,6
-        [0, 2, 1, 1, 2, 2, 2],  # row 1
-        [0, 1, 1, 1, 1, 2, 2],  # row 2
-        [2, 2, 1, 1, 2, 2, 2],  # row 3
-        [1, 1, 1, 1, 2, 2, 2],  # row 4
-        [1, 1, 1, 1, 2, 2, 2],  # row 5
-        [1, 1, 1, 1, 2, 2, 2],  # row 6
-    ]
-
     f = extra_compress(board)
 
     # move = maximize_alpha(f, 8, -2000, 2000)
-    move = maximize(f, 4)
+    t = treelib.Tree()
+    move = maximize(f, 6, t, None)
     newboard = move[1]
     newcols = expand(newboard)
     newf = extra_expand(newcols)
