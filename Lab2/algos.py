@@ -172,7 +172,7 @@ def place(int_board, col):  # the coloum where the player wants to add a piece
 def is_goal(int_board):
     return (
         int_board & 0b111000000111000000111000000111000000111000000111000000111000000
-    ) == 0b111000000111000000111000000111000000111000000111000000111000000
+    ) == 0
 
 
 # def game(int_board,turn):
@@ -457,8 +457,20 @@ if __name__ == "__main__":
         [1, 2, 1, 2, 1, 2, 1],  # row 6
     ]
 
+    board = [
+        # 0,1,2,3,4,5,6
+        [0, 2, 1, 1, 2, 2, 2],  # row 1
+        [0, 1, 1, 1, 1, 2, 2],  # row 2
+        [2, 2, 1, 1, 2, 2, 2],  # row 3
+        [1, 1, 1, 1, 2, 2, 2],  # row 4
+        [1, 1, 1, 1, 2, 2, 2],  # row 5
+        [1, 1, 1, 1, 2, 2, 2],  # row 6
+    ]
+
     f = extra_compress(board)
-    move = maximize_alpha(f, 8, -2000, 2000)
+
+    # move = maximize_alpha(f, 8, -2000, 2000)
+    move = maximize(f, 4)
     newboard = move[1]
     newcols = expand(newboard)
     newf = extra_expand(newcols)

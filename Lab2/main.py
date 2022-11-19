@@ -723,7 +723,7 @@ class Ui_ConnectFour(object):
                 self.aiScore.setText("AI score: " + str(score[1]))
                 self.animating = True
                 self.animation.finished.connect(self.changeturn)
-                self.check_end()
+                self.check_end(score)
 
     def add2(self):
         if not self.animating:
@@ -756,7 +756,7 @@ class Ui_ConnectFour(object):
                 self.aiScore.setText("AI score: " + str(score[1]))
                 self.animating = True
                 self.animation.finished.connect(self.changeturn)
-                self.check_end()
+                self.check_end(score)
 
     def add3(self):
         if not self.animating:
@@ -789,7 +789,7 @@ class Ui_ConnectFour(object):
                 self.aiScore.setText("AI score: " + str(score[1]))
                 self.animating = True
                 self.animation.finished.connect(self.changeturn)
-                self.check_end()
+                self.check_end(score)
 
     def add4(self):
         if not self.animating:
@@ -822,7 +822,7 @@ class Ui_ConnectFour(object):
                 self.aiScore.setText("AI score: " + str(score[1]))
                 self.animating = True
                 self.animation.finished.connect(self.changeturn)
-                self.check_end()
+                self.check_end(score)
 
     def add5(self):
         if not self.animating:
@@ -855,7 +855,7 @@ class Ui_ConnectFour(object):
                 self.aiScore.setText("AI score: " + str(score[1]))
                 self.animating = True
                 self.animation.finished.connect(self.changeturn)
-                self.check_end()
+                self.check_end(score)
 
     def add6(self):
         if not self.animating:
@@ -888,7 +888,7 @@ class Ui_ConnectFour(object):
                 self.aiScore.setText("AI score: " + str(score[1]))
                 self.animating = True
                 self.animation.finished.connect(self.changeturn)
-                self.check_end()
+                self.check_end(score)
 
     def add7(self):
         if not self.animating:
@@ -921,7 +921,7 @@ class Ui_ConnectFour(object):
                 self.aiScore.setText("AI score: " + str(score[1]))
                 self.animating = True
                 self.animation.finished.connect(self.changeturn)
-                self.check_end()
+                self.check_end(score)
 
     def undo_move(self):
         if not (self.turn):
@@ -998,7 +998,11 @@ class Ui_ConnectFour(object):
                 puck.move(puck.x(), 0)
 
     def call(self):
-        if not self.animating and self.turn == 0:
+        done = 1
+        for i in range(7):
+            if self.columnCount[i] != 6:
+                done = 0
+        if not self.animating and self.turn == 0 and not done:
             depth = self.spinbox.value()
             temp = swaparr(self.gameboard)
             board = extra_compress(temp)
@@ -1055,9 +1059,9 @@ class Ui_ConnectFour(object):
             score = scoregui(extra_compress(swaparr(self.gameboard)))
             self.player1Score.setText("Player score: " + str(score[0]))
             self.aiScore.setText("AI score: " + str(score[1]))
-            self.check_end()
+            self.check_end(score)
 
-    def check_end(self):
+    def check_end(self, score):
         done = 1
         for i in range(7):
             if self.columnCount[i] != 6:
