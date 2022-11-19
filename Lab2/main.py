@@ -452,6 +452,7 @@ class Ui_ConnectFour(object):
         self.y72.setText("")
         self.y72.setPixmap(QtGui.QPixmap("connect-4-puck-yellow.png"))
         self.y72.setObjectName("y72")
+        self.depth = 0
 
         self.redPucks = [
             [self.r11, self.r12, self.r13, self.r14, self.r15, self.r16],
@@ -513,15 +514,18 @@ class Ui_ConnectFour(object):
             exec(f"self.r{i}.setHidden(True)")
             exec(f"self.y{i}.setHidden(True)")
 
+        self.depth = 0
+
+
         self.groupBox = QtWidgets.QGroupBox(self.centralwidget)
         self.groupBox.setGeometry(QtCore.QRect(949, 20, 281, 111))
         self.groupBox.setObjectName("groupBox")
         self.comboBox = QtWidgets.QComboBox(self.groupBox)
         self.comboBox.setGeometry(QtCore.QRect(20, 30, 241, 22))
         self.comboBox.setObjectName("comboBox")
-        self.chooseMode = QtWidgets.QPushButton(self.groupBox)
-        self.chooseMode.setGeometry(QtCore.QRect(110, 70, 75, 23))
-        self.chooseMode.setObjectName("chooseMode")
+        self.spinbox = QtWidgets.QSpinBox(self.groupBox)
+        self.spinbox.setGeometry(QtCore.QRect(20, 70, 241, 22))
+        self.spinbox.setObjectName("comboBox")
         self.announceWinner = QtWidgets.QLabel(self.centralwidget)
         self.announceWinner.setGeometry(QtCore.QRect(950, 160, 281, 61))
         self.announceWinner.setObjectName("announceWinner")
@@ -641,6 +645,8 @@ class Ui_ConnectFour(object):
         self.comboBox.addItem("Minimax without alpha-beta pruning")
         self.comboBox.addItem("Minimax with alpha-beta pruning")
 
+
+
         ConnectFour.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(ConnectFour)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1254, 21))
@@ -657,8 +663,7 @@ class Ui_ConnectFour(object):
         _translate = QtCore.QCoreApplication.translate
         ConnectFour.setWindowTitle(_translate("ConnectFour", "Connect Four"))
         ConnectFour.setWindowIcon(QtGui.QIcon("icon.png"))
-        self.groupBox.setTitle(_translate("ConnectFour", "Choose your mode"))
-        self.chooseMode.setText(_translate("ConnectFour", "Confirm"))
+        self.groupBox.setTitle(_translate("ConnectFour", "Choose your mode, depth"))
         self.confirmMove.setText(_translate("ConnectFour", "Confirm move"))
         self.removeMove.setText(_translate("ConnectFour", "Undo move"))
         self.announceWinner.setText(_translate("ConnectFour", ""))
@@ -673,6 +678,7 @@ class Ui_ConnectFour(object):
             self.turn = 0
         else:
             self.turn = 1
+
 
     def add1(self):
         self.announceWinner.setText("")
@@ -898,11 +904,12 @@ class Ui_ConnectFour(object):
 
     def call(self):
         if self.turn == 0:
+            depth = self.spinbox.value()
             temp = swaparr(self.gameboard)
             board = extra_compress(temp)
             if self.comboBox.currentText() == "Minimax with alpha-beta pruning":
                 diff = -1
-                new = maximize_alpha(board, 8, -2000, 2000)
+                new = maximize_alpha(board, depth, -2000, 2000)
                 newBoard = new[1]
                 newArray = extra_expand(expand(newBoard))
                 temp2 = swaparr2(newArray)
@@ -926,7 +933,7 @@ class Ui_ConnectFour(object):
 
             elif "Minimax without alpha-beta pruning":
                 diff = -1
-                new = maximize(board, 2)
+                new = maximize(board, depth)
                 newBoard = new[1]
                 newArray = extra_expand(expand(newBoard))
                 temp2 = swaparr2(newArray)
@@ -962,6 +969,11 @@ class Ui_ConnectFour(object):
                         self.announceWinner.setText("You Won!!")
                         self.announceWinner.setFont(QFont("Arial", 18))
                         self.announceWinner.setStyleSheet("background-color: green")
+
+                    elif score[0] == score[1]:
+                        self.announceWinner.setText("You Won!!")
+                        self.announceWinner.setFont(QFont("Arial", 18))
+                        self.announceWinner.setStyleSheet("background-color: Yellow")
 
                     else:
                         self.announceWinner.setText("You lost!!")
