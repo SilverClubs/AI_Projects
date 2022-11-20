@@ -1,3 +1,5 @@
+import time
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtGui import QFont
@@ -555,6 +557,9 @@ class Ui_ConnectFour(object):
         self.aiScore = QtWidgets.QLabel(self.centralwidget)
         self.aiScore.setGeometry(QtCore.QRect(950, 330, 281, 61))
         self.aiScore.setObjectName("aiScore")
+        self.timer = QtWidgets.QLabel(self.centralwidget)
+        self.timer.setGeometry(QtCore.QRect(950, 450, 281, 61))
+        self.timer.setObjectName("timer")
         self.c1 = Label(self.centralwidget)
         self.c1.setGeometry(QtCore.QRect(10, 130, 131, 781))
         self.c1.setMouseTracking(False)
@@ -1052,7 +1057,12 @@ class Ui_ConnectFour(object):
             parent = None
             if self.comboBox.currentText() == "Minimax with alpha-beta pruning":
                 diff = -1
+                start = time.time()
                 new = maximize_alpha(board, depth, -2000, 2000, self.tree, parent)
+                end = time.time()
+                net_time = round((end - start), 3)
+                self.timer.setText("Time taken to solve: " + str(net_time) + " s")
+                self.timer.setFont(QFont("Arial", 13))
                 newBoard = new[1]
                 newArray = extra_expand(expand(newBoard))
                 temp2 = swaparr2(newArray)
@@ -1077,7 +1087,12 @@ class Ui_ConnectFour(object):
 
             elif "Minimax without alpha-beta pruning":
                 diff = -1
+                start = time.time()
                 new = maximize(board, depth, self.tree, parent)
+                end = time.time()
+                net_time = round((end - start), 3)
+                self.timer.setText("Time taken to solve: " + str(net_time) + " s")
+                self.timer.setFont(QFont("Arial", 13))
                 newBoard = new[1]
                 newArray = extra_expand(expand(newBoard))
                 temp2 = swaparr2(newArray)
