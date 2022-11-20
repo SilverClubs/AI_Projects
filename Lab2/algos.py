@@ -1,7 +1,6 @@
 # 1 is ai
 # 2 is human
 
-import functools
 import treelib
 import uuid
 
@@ -33,7 +32,7 @@ def swaparr(arr):
 # From algos to gui
 def swaparr2(arr):
     board = [
-        # 0,1,2,3,4,5,6
+        # 0,1,2,3,4,5
         [0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0],
@@ -72,11 +71,7 @@ def heuristic(int_board):
     return total
 
 
-def comp_heuristic(board1, board2):
-    return heuristic(board1) - heuristic(board2)
-
-
-def expand(int_board):  # returns an array were each slot represents a
+def expand(int_board):  # turn 1 int into 7 binary strings
     board_state = format(int_board, "063b")
     i = 0
     j = 0
@@ -89,7 +84,7 @@ def expand(int_board):  # returns an array were each slot represents a
     return filled
 
 
-def extra_expand(coloumns):
+def extra_expand(coloumns):  # turn 7 binary strings into 2d int array
     board = [
         # 0,1,2,3,4,5,6
         [0, 0, 0, 0, 0, 0, 0],
@@ -111,7 +106,7 @@ def extra_expand(coloumns):
     return board
 
 
-def compress(board):
+def compress(board):  # turn board into 7 binary strings
     filled = ["" for x in range(7)]
     for i in range(6, -1, -1):
         col_position = 0
@@ -149,7 +144,7 @@ def compress(board):
     return filled
 
 
-def extra_compress(board):
+def extra_compress(board):  # turn 7 binary strings into 1 int
     filled = compress(board)
     temp = ""
     for f in filled:
@@ -158,14 +153,7 @@ def extra_compress(board):
     return int_board
 
 
-def place(int_board, col):  # the coloum where the player wants to add a piece
-    coloums = expand(int_board)
-    coloum = coloums[col]
-    first_empty = coloum[0:3]
-    f_empty = int()
-
-
-def is_goal(int_board):
+def is_goal(int_board):  # check if terminal goal state
     return (
         int_board & 0b111000000111000000111000000111000000111000000111000000111000000
     ) == 0
@@ -252,9 +240,8 @@ def maximize_alpha(int_board, depth, alpha, beta, tree, parentID):
     return best_move, best_neighbour
 
 
-def explore(int_board, turn):
+def explore(int_board, turn):  # return neighbour states
     states = []
-    empty = []
     cols = expand(int_board)
     board = extra_expand(cols)
     i = 0
@@ -269,7 +256,7 @@ def explore(int_board, turn):
                 states.append(extra_compress(tempboard))
             i = i + 1
 
-    elif turn == 2:
+    else:  # turn == 2
         i = 0
         for col in cols:
             first_empty = col[0:3]
