@@ -15,10 +15,6 @@ import sys
 import os
 from PyQt5 import QtGui, QtSvg
 
-# TODO: make tree visualization an option, using a button or something
-# TODO: add AI timer after play
-# TODO: revise alpha beta algorithm and its trees
-
 
 class Label(QLabel):
     clicked = pyqtSignal()

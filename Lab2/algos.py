@@ -1,12 +1,5 @@
-# 1 is red
-# 2 is black
-# TODO: Optimize code
-#       *** use binary form instead of expanding and compressing ***
-#       extra_expand
-#       score
-#       compress (perhaps also avoid format function)
-#       very low priority: explore
-# TODO: revise alpha beta algorithm and its trees
+# 1 is ai
+# 2 is human
 
 import functools
 import treelib
@@ -102,17 +95,13 @@ def extra_expand(coloumns):
     ]
     i = 0
     for coloumn in coloumns:
-        # print("!!!!!!!!!!!!in fIRST FOR!!!!!!!!!!")
         f_empty = int(coloumn[0:3], 2)
         last_bit = 9
 
-        # print("!!!!!!!!!!!!CHECK DONE!!!!!!!!!!")
         for j in range(5, f_empty - 1, -1):
-            # print("!!!!!!!!!!!!in SECOND FOR!!!!!!!!!!")
             board[j][i] = 2 - ord(coloumn[last_bit - 1]) + 48
             last_bit = last_bit - 1
         i = i + 1
-        # print(i)
     return board
 
 
@@ -174,9 +163,6 @@ def is_goal(int_board):
     return (
         int_board & 0b111000000111000000111000000111000000111000000111000000111000000
     ) == 0
-
-
-# def game(int_board,turn):
 
 
 def minimize(int_board, depth, tree, parentID):
@@ -260,12 +246,7 @@ def maximize_alpha(int_board, depth, alpha, beta, tree, parentID):
     return best_move, best_neighbour
 
 
-# def heuristic(int_board): #very weak heuristic
-
-
-def explore(
-    int_board, turn
-):  #!!!!!!!PROBLEM IT OVERWRITES VALUES OF THE OTHER PLAYER MAYBE
+def explore(int_board, turn):
     states = []
     empty = []
     cols = expand(int_board)
@@ -277,7 +258,6 @@ def explore(
             first_empty = col[0:3]
             f_empty = int(first_empty, 2)
             tempboard = [row[:] for row in board]
-            # print(board)
             if f_empty != 0:
                 tempboard[f_empty - 1][i] = 1
                 states.append(extra_compress(tempboard))
@@ -289,7 +269,6 @@ def explore(
             first_empty = col[0:3]
             f_empty = int(first_empty, 2)
             tempboard = [row[:] for row in board]
-            # print(board)
             if f_empty != 0:
                 tempboard[f_empty - 1][i] = 2
                 states.append(extra_compress(tempboard))
@@ -464,7 +443,6 @@ if __name__ == "__main__":
 
     f = extra_compress(board)
 
-    # move = maximize_alpha(f, 8, -2000, 2000)
     t = treelib.Tree()
     move = maximize(f, 6, t, None)
     newboard = move[1]
