@@ -1069,7 +1069,9 @@ class Ui_ConnectFour(object):
                 net_time = round((end - start), 3)
                 self.timer.setText("Time taken to solve: " + str(net_time) + " s")
                 self.timer.setFont(QFont("Arial", 13))
-                self.nodeCount.setText("Node count: " + str(self.tree.size()))
+                self.nodeCount.setText(
+                    "Node expanded: " + str(self.tree.size() - len(self.tree.leaves()))
+                )
                 self.nodeCount.setFont(QFont("Arial", 13))
                 newBoard = new[1]
                 newArray = extra_expand(expand(newBoard))
@@ -1101,7 +1103,9 @@ class Ui_ConnectFour(object):
                 net_time = round((end - start), 3)
                 self.timer.setText("Time taken to solve: " + str(net_time) + " s")
                 self.timer.setFont(QFont("Arial", 13))
-                self.nodeCount.setText("Node count: " + str(self.tree.size()))
+                self.nodeCount.setText(
+                    "Node expanded: " + str(self.tree.size() - len(self.tree.leaves()))
+                )
                 self.nodeCount.setFont(QFont("Arial", 13))
                 newBoard = new[1]
                 newArray = extra_expand(expand(newBoard))
