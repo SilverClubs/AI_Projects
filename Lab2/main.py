@@ -1069,7 +1069,8 @@ class Ui_ConnectFour(object):
                 self.nodeCount.setText("")
                 if self.treeToggler == 0:
                     self.nodeCount.setText(
-                        "Node expanded: " + str(self.tree.size() - len(self.tree.leaves()))
+                        "Nodes expanded: "
+                        + str(self.tree.size() - len(self.tree.leaves()))
                     )
                 self.nodeCount.setFont(QFont("Arial", 13))
                 newBoard = new[1]
@@ -1105,7 +1106,8 @@ class Ui_ConnectFour(object):
                 self.nodeCount.setText("")
                 if self.treeToggler == 0:
                     self.nodeCount.setText(
-                        "Node expanded: " + str(self.tree.size() - len(self.tree.leaves()))
+                        "Nodes expanded: "
+                        + str(self.tree.size() - len(self.tree.leaves()))
                     )
                 self.nodeCount.setFont(QFont("Arial", 13))
                 newBoard = new[1]
@@ -1141,7 +1143,10 @@ class Ui_ConnectFour(object):
                     pass
                 self.tree.to_graphviz("tree.dot")
                 s = graphviz.Source.from_file("tree.dot")
-                s.render("tree.gv", format="svg", view=False)
+                try:
+                    s.render("tree.gv", format="svg", view=False)
+                except Exception as e:
+                    print("dot tree is too large to render")
 
             score = scoregui(extra_compress(swaparr(self.gameboard)))
             self.player1Score.setText("Player score: " + str(score[0]))
