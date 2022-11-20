@@ -12,6 +12,7 @@ from algos import *
 import treelib
 import graphviz
 import sys
+import os
 from PyQt5 import QtGui, QtSvg
 
 # TODO: make tree visualization an option, using a button or something
@@ -461,7 +462,7 @@ class Ui_ConnectFour(object):
         self.y72.setText("")
         self.y72.setPixmap(QtGui.QPixmap("connect-4-puck-yellow.png"))
         self.y72.setObjectName("y72")
-        self.svgWidget = QtSvg.QSvgWidget('tree.gv.svg')
+        self.svgWidget = QtSvg.QSvgWidget("tree.gv.svg")
         self.depth = 0
 
         self.redPucks = [
@@ -560,6 +561,9 @@ class Ui_ConnectFour(object):
         self.timer = QtWidgets.QLabel(self.centralwidget)
         self.timer.setGeometry(QtCore.QRect(950, 450, 281, 61))
         self.timer.setObjectName("timer")
+        self.nodeCount = QtWidgets.QLabel(self.centralwidget)
+        self.nodeCount.setGeometry(QtCore.QRect(950, 500, 281, 61))
+        self.nodeCount.setObjectName("nodeCount")
         self.c1 = Label(self.centralwidget)
         self.c1.setGeometry(QtCore.QRect(10, 130, 131, 781))
         self.c1.setMouseTracking(False)
@@ -735,7 +739,7 @@ class Ui_ConnectFour(object):
             self.turn = 1
 
     def showTree(self):
-        self.svgWidget = QtSvg.QSvgWidget('tree.gv.svg')
+        self.svgWidget = QtSvg.QSvgWidget("tree.gv.svg")
         self.svgWidget.setGeometry(50, 50, 1000, 1500)
         self.svgWidget.show()
 
@@ -1052,6 +1056,7 @@ class Ui_ConnectFour(object):
         if not self.animating and self.turn == 0 and not done:
             self.tree = treelib.Tree()
             depth = self.spinbox.value()
+
             temp = swaparr(self.gameboard)
             board = extra_compress(temp)
             parent = None
@@ -1063,6 +1068,8 @@ class Ui_ConnectFour(object):
                 net_time = round((end - start), 3)
                 self.timer.setText("Time taken to solve: " + str(net_time) + " s")
                 self.timer.setFont(QFont("Arial", 13))
+                self.nodeCount.setText("Node count: " + str(self.tree.size()))
+                self.nodeCount.setFont(QFont("Arial", 13))
                 newBoard = new[1]
                 newArray = extra_expand(expand(newBoard))
                 temp2 = swaparr2(newArray)
@@ -1093,6 +1100,8 @@ class Ui_ConnectFour(object):
                 net_time = round((end - start), 3)
                 self.timer.setText("Time taken to solve: " + str(net_time) + " s")
                 self.timer.setFont(QFont("Arial", 13))
+                self.nodeCount.setText("Node count: " + str(self.tree.size()))
+                self.nodeCount.setFont(QFont("Arial", 13))
                 newBoard = new[1]
                 newArray = extra_expand(expand(newBoard))
                 temp2 = swaparr2(newArray)
@@ -1116,6 +1125,14 @@ class Ui_ConnectFour(object):
                 self.animation.finished.connect(self.changeturn)
 
             if self.treeToggler == 0:
+                try:
+                    os.remove("tree.dot")
+                except OSError:
+                    pass
+                try:
+                    os.remove("tree.gv")
+                except OSError:
+                    pass
                 self.tree.to_graphviz("tree.dot")
                 s = graphviz.Source.from_file("tree.dot")
                 s.render("tree.gv", format="svg", view=False)
@@ -1146,8 +1163,6 @@ class Ui_ConnectFour(object):
                 self.announceWinner.setText("You lost!!")
                 self.announceWinner.setFont(QFont("Arial", 18))
                 self.announceWinner.setStyleSheet("background-color: #FF6961")
-
-
 
 
 if __name__ == "__main__":
