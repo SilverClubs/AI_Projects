@@ -3,7 +3,6 @@ from collections import deque
 from heapq import heappush, heappop
 import time
 
-
 goal = [
     [0, 1, 2],
     [3, 4, 5],

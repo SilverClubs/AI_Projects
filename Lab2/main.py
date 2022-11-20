@@ -10,6 +10,7 @@ from algos import *
 import treelib
 import graphviz
 import sys
+from PyQt5 import QtGui, QtSvg
 
 # TODO: make tree visualization an option, using a button or something
 # TODO: add AI timer after play
@@ -458,6 +459,7 @@ class Ui_ConnectFour(object):
         self.y72.setText("")
         self.y72.setPixmap(QtGui.QPixmap("connect-4-puck-yellow.png"))
         self.y72.setObjectName("y72")
+        self.svgWidget = QtSvg.QSvgWidget('tree.gv.svg')
         self.depth = 0
 
         self.redPucks = [
@@ -479,6 +481,8 @@ class Ui_ConnectFour(object):
             [self.y61, self.y62, self.y63, self.y64, self.y65, self.y66],
             [self.y71, self.y72, self.y73, self.y74, self.y75, self.y76],
         ]
+
+        self.treeToggler = 0
 
         self.gameboard = [
             [0, 0, 0, 0, 0, 0],
@@ -523,7 +527,7 @@ class Ui_ConnectFour(object):
         self.depth = 4
 
         self.groupBox = QtWidgets.QGroupBox(self.centralwidget)
-        self.groupBox.setGeometry(QtCore.QRect(949, 20, 281, 111))
+        self.groupBox.setGeometry(QtCore.QRect(949, 20, 281, 161))
         self.groupBox.setObjectName("groupBox")
         self.comboBox = QtWidgets.QComboBox(self.groupBox)
         self.comboBox.setGeometry(QtCore.QRect(20, 30, 241, 22))
@@ -532,8 +536,17 @@ class Ui_ConnectFour(object):
         self.spinbox.setGeometry(QtCore.QRect(20, 70, 241, 22))
         self.spinbox.setObjectName("comboBox")
         self.spinbox.setValue(self.depth)
+
+        self.toggle = QtWidgets.QPushButton(
+            self.groupBox, clicked=lambda: self.togglefunc()
+        )
+        self.toggle.setGeometry(QtCore.QRect(90, 110, 90, 30))
+        self.toggle.setObjectName("toggle")
+        self.toggle.setCheckable(True)
+        self.toggle.setStyleSheet("background-color : lightgrey")
+
         self.announceWinner = QtWidgets.QLabel(self.centralwidget)
-        self.announceWinner.setGeometry(QtCore.QRect(950, 160, 281, 61))
+        self.announceWinner.setGeometry(QtCore.QRect(950, 190, 281, 61))
         self.announceWinner.setObjectName("announceWinner")
         self.announceWinner.setAlignment(QtCore.Qt.AlignCenter)
         self.player1Score = QtWidgets.QLabel(self.centralwidget)
@@ -624,6 +637,12 @@ class Ui_ConnectFour(object):
         self.resetBoard.setGeometry(QtCore.QRect(950, 750, 110, 41))
         self.resetBoard.setObjectName("resetBoard")
 
+        self.myTree = QtWidgets.QPushButton(
+            self.centralwidget, clicked=lambda: self.showTree()
+        )
+        self.myTree.setGeometry(QtCore.QRect(1037, 930, 110, 41))
+        self.myTree.setObjectName("showTree")
+
         for i in range(11, 17):
             exec(f"self.r{i}.raise_()")
             exec(f"self.y{i}.raise_()")
@@ -684,6 +703,8 @@ class Ui_ConnectFour(object):
         self.removeMove.setText(_translate("ConnectFour", "Undo move"))
         self.switchPlayer.setText(_translate("ConnectFour", "Switch player"))
         self.resetBoard.setText(_translate("ConnectFour", "Reset board"))
+        self.toggle.setText(_translate("ConnectFour", "Dont create tree"))
+        self.myTree.setText(_translate("ConnectFour", "Show tree"))
         self.announceWinner.setText(_translate("ConnectFour", ""))
         self.player1Score.setText(_translate("ConnectFour", "Player score: 0"))
         self.aiScore.setText(_translate("ConnectFour", "AI score: 0"))
@@ -691,12 +712,27 @@ class Ui_ConnectFour(object):
         self.player1Score.setFont(QFont("Arial", 18))
         self.announceWinner.setStyleSheet("")
 
+    def togglefunc(self):
+        if self.treeToggler == 0:
+            self.toggle.setStyleSheet("background-color : lightblue")
+            self.toggle.setText("Create tree")
+            self.treeToggler = 1
+        else:
+            self.toggle.setText("Dont create tree")
+            self.toggle.setStyleSheet("background-color : lightgrey")
+            self.treeToggler = 0
+
     def changeturn(self):
         self.animating = False
         if self.turn == 1:
             self.turn = 0
         else:
             self.turn = 1
+
+    def showTree(self):
+        self.svgWidget = QtSvg.QSvgWidget('tree.gv.svg')
+        self.svgWidget.setGeometry(50, 50, 1000, 1500)
+        self.svgWidget.show()
 
     def add1(self):
         if not self.animating:
@@ -1064,9 +1100,10 @@ class Ui_ConnectFour(object):
                 self.animating = True
                 self.animation.finished.connect(self.changeturn)
 
-            self.tree.to_graphviz("tree.dot")
-            s = graphviz.Source.from_file("tree.dot")
-            s.render("tree.gv", format="svg", view=False)
+            if self.treeToggler == 0:
+                self.tree.to_graphviz("tree.dot")
+                s = graphviz.Source.from_file("tree.dot")
+                s.render("tree.gv", format="svg", view=False)
 
             score = scoregui(extra_compress(swaparr(self.gameboard)))
             self.player1Score.setText("Player score: " + str(score[0]))
@@ -1094,6 +1131,8 @@ class Ui_ConnectFour(object):
                 self.announceWinner.setText("You lost!!")
                 self.announceWinner.setFont(QFont("Arial", 18))
                 self.announceWinner.setStyleSheet("background-color: #FF6961")
+
+
 
 
 if __name__ == "__main__":
