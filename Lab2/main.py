@@ -539,6 +539,7 @@ class Ui_ConnectFour(object):
         self.spinbox.setGeometry(QtCore.QRect(20, 70, 241, 22))
         self.spinbox.setObjectName("comboBox")
         self.spinbox.setValue(self.depth)
+        self.spinbox.setMinimum(1)
 
         self.toggle = QtWidgets.QPushButton(
             self.groupBox, clicked=lambda: self.togglefunc()
