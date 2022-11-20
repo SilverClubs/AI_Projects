@@ -458,7 +458,6 @@ class Ui_ConnectFour(object):
         self.y72.setText("")
         self.y72.setPixmap(QtGui.QPixmap("connect-4-puck-yellow.png"))
         self.y72.setObjectName("y72")
-        self.svgWidget = QtSvg.QSvgWidget("tree.gv.svg")
         self.depth = 0
 
         self.redPucks = [
@@ -1051,7 +1050,9 @@ class Ui_ConnectFour(object):
             if self.columnCount[i] != 6:
                 done = 0
         if not self.animating and self.turn == 0 and not done:
-            self.tree = treelib.Tree()
+            self.tree = dummyTree()
+            if self.treeToggler == 0:
+                self.tree = treelib.Tree()
             depth = self.spinbox.value()
 
             temp = swaparr(self.gameboard)
@@ -1065,9 +1066,11 @@ class Ui_ConnectFour(object):
                 net_time = round((end - start), 3)
                 self.timer.setText("Time taken to solve: " + str(net_time) + " s")
                 self.timer.setFont(QFont("Arial", 13))
-                self.nodeCount.setText(
-                    "Node expanded: " + str(self.tree.size() - len(self.tree.leaves()))
-                )
+                self.nodeCount.setText("")
+                if self.treeToggler == 0:
+                    self.nodeCount.setText(
+                        "Node expanded: " + str(self.tree.size() - len(self.tree.leaves()))
+                    )
                 self.nodeCount.setFont(QFont("Arial", 13))
                 newBoard = new[1]
                 newArray = extra_expand(expand(newBoard))
@@ -1099,9 +1102,11 @@ class Ui_ConnectFour(object):
                 net_time = round((end - start), 3)
                 self.timer.setText("Time taken to solve: " + str(net_time) + " s")
                 self.timer.setFont(QFont("Arial", 13))
-                self.nodeCount.setText(
-                    "Node expanded: " + str(self.tree.size() - len(self.tree.leaves()))
-                )
+                self.nodeCount.setText("")
+                if self.treeToggler == 0:
+                    self.nodeCount.setText(
+                        "Node expanded: " + str(self.tree.size() - len(self.tree.leaves()))
+                    )
                 self.nodeCount.setFont(QFont("Arial", 13))
                 newBoard = new[1]
                 newArray = extra_expand(expand(newBoard))

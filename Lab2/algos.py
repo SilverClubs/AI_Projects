@@ -5,6 +5,12 @@ import functools
 import treelib
 import uuid
 
+
+class dummyTree:
+    def create_node(self, int_board, pID, parent):
+        pass
+
+
 # From gui to algos
 def swaparr(arr):
     board = [
@@ -443,7 +449,7 @@ if __name__ == "__main__":
 
     f = extra_compress(board)
 
-    t = treelib.Tree()
+    t = dummyTree()
     move = maximize(f, 6, t, None)
     newboard = move[1]
     newcols = expand(newboard)
